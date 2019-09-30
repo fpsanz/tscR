@@ -14,7 +14,7 @@ imputeSenators <- function(x, k=100){
   names(senatorsWeight) <- paste("sen",1:100,sep="")
   senatorsWide <- senatorsWide[as.integer(names(reOrder)),]
   rownames(senatorsWide) <- names(senatorsWeight)
-  mySenator <- data.frame(id=df,senators=paste("sen",mySenators,sep=""))
+  mySenator <- data.frame(id=x,senators=paste("sen",mySenators,sep=""))
   senatorObj<-list(mySenator=mySenator,senatorsWide=senatorsWide,senatorsWeight=senatorsWeight)
   return(senatorObj)
 }
