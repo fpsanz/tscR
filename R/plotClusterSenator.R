@@ -1,5 +1,6 @@
 ## plot clusterSenators
 plotClusterSenator <- function(x, ncluster=1){
+  requiere(graphics)
   if(class(x)!="imputeSenator"){
     stop("x must be imputeSenator class from imputeSenator function")
   }

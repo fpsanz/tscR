@@ -1,6 +1,8 @@
-# función para calcular matriz de distancias slopes
-#TODO hay que definir tamaño máximo de la matrix. Unas 1000 filas podría ser el límite. Más derivar a version large
+
 slopeDist <- function(x, time){
+  if(dim(x)[1]>100){
+    warning("Large matrix or data.frame could cause memory problems. You should use imputeSenators function")
+  }
   if(is.data.frame(x)){
     x <- as.matrix(x)
   }
