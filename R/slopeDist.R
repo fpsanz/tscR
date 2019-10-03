@@ -1,6 +1,30 @@
+#' slopeDist
+#'
+#' Compute pairswise distance based on slopes in a matrix of trajectories
+#'
+#'
+#' @param x Numeric matrix or data.frame with trajectory values. Rows are trajectories,
+#'  columns are time or similar.
+#' @param time Numeric vector with time data (time intervals), with equal length to columns number in x.
+#'
+#' @return A dist class object of size NxN, where N is rows number in the input data
+#'
+#'
+#' @examples
+#'
+#' data(tscR)
+#' time <- c(1,2,3)
+#' dist_tscR <- slopeDist(tscR, time)
+#'
+#'
+#' @seealso \code{\link{frechetDistC} and \link{frechetDist} (R and slower versión than frechetDistC.)}
+#'
+#' @author  Fernando Pérez-Sanz (\code{fernando.perez8@@um.es})
+#' @author  Miriam Riquelme Pérez (\code{miriam.riquelmep@@gmail.com})
+
 
 slopeDist <- function(x, time){
-  if(dim(x)[1]>100){
+  if(dim(x)[1]>1000){
     warning("Large matrix or data.frame could cause memory problems. You should use imputeSenators function")
   }
   if(is.data.frame(x)){

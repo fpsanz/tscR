@@ -1,2 +1,5 @@
 useDynLib(tscR)
-exportPattern("^[[:alpha:]]+")
+export("data","frechetDist",
+       "combineCluster","frechetDistC","getClusters",
+       "imputeSenators","imputeSenatorToData","plotCluster",
+       "plotClusterSenator","slopeDist")

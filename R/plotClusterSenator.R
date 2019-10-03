@@ -1,12 +1,12 @@
 ## plot clusterSenators
 plotClusterSenator <- function(x, ncluster=1){
-  requiere(graphics)
+  require(graphics)
   if(class(x)!="imputeSenator"){
     stop("x must be imputeSenator class from imputeSenator function")
   }
   if( length(ncluster)==1 && ncluster == "all"){
     clusteres <- as.numeric(gsub("end","",x@endCluster))
-    colors <- fcolor(clusteres)
+    colors <- tscR:::fcolor(clusteres)
     matplot(t(x@data), lty = 1, type = "l", col=colors,
             ylab = "Trajectories", xlab="Time" )
   }
@@ -23,7 +23,7 @@ plotClusterSenator <- function(x, ncluster=1){
       clusteres <- as.numeric( gsub ("end","",x@endCluster) )
       posCluster <- which(clusteres %in% ncluster)
       posCluster2 <- clusteres[posCluster]
-      colors <- fcolor(c(1:length(ncluster)))
+      colors <- tscR:::fcolor(c(1:length(ncluster)))
       par( mfrow = c(n,2) )
       c=1
       for(i in ncluster){
