@@ -1,0 +1,37 @@
+---
+title: "tscR"
+output:
+  prettydoc::html_pretty:
+    theme: cayman
+    highlight: github
+  pdf_document:
+    toc: true
+vignette: >
+  %\VignetteIndexEntry{tscR}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(tscR)
+```
+
+# punto 1
+
+Esto es el principio de la viñeta
+
+## subpunto 1
+
+sasdas
+
+# punto 2
+
+das
+fdfdafdasfdf
