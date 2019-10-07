@@ -12,18 +12,14 @@ output:
     toc: true
 vignette: >
   %\VignetteIndexEntry{tscR}
-  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEngine{knitr::knitr}
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
-)
-```
 
-```{r setup, include=FALSE, comment=FALSE}
+
+
+```r
 library(tscR)
 ```
 

@@ -3,3 +3,6 @@ export("data","frechetDist",
        "combineCluster","frechetDistC","getClusters",
        "imputeSenators","imputeSenatorToData","plotCluster",
        "plotClusterSenator","slopeDist")
+exportClasses("imputeSenator")
+importFrom(cluster, pam)
+importFrom(cluster, clara)

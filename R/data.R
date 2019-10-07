@@ -1,4 +1,4 @@
-#' Dummy trajectories
+#' Dummy trajectories data
 #'
 #' A dataset containing 300 tajectories and 3 time points
 #'

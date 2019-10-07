@@ -1,6 +1,6 @@
-#' slopeDist
+#' Pairwise slope distance
 #'
-#' Compute pairswise distance based on slopes in a matrix of trajectories
+#' Compute pairwise distance based on slopes in a matrix of trajectories
 #'
 #'
 #' @param x Numeric matrix or data.frame with trajectory values. Rows are trajectories,

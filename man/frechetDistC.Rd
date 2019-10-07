@@ -2,7 +2,7 @@
 % Please edit documentation in R/frechetDistC.R
 \name{frechetDistC}
 \alias{frechetDistC}
-\title{frechetDistC}
+\title{Pairwise Frechet distance (C version)}
 \usage{
 frechetDistC(x, time)
 }
@@ -16,7 +16,8 @@ columns are time or similar.}
 A dist class object of size NxN, where N is rows number in the input data
 }
 \description{
-Compute pairswise Frechet distance in a matrix of trajectories
+Compute pairwise Frechet distance in a matrix of trajectories. This function is a C implementation and
+a lot faster version than frechetDist
 }
 \details{
 This function is a C adaptation of the distFrechet code from kmlShape package for use with a matrix or

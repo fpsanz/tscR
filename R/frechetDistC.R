@@ -1,7 +1,7 @@
-#' frechetDistC
+#' Pairwise Frechet distance (C version)
 #'
-#' Compute pairswise Frechet distance in a matrix of trajectories
-#'
+#' Compute pairwise Frechet distance in a matrix of trajectories. This function is a C implementation and
+#' a lot faster version than frechetDist
 #'
 #' @param x Numeric matrix or data.frame with trajectory values. Rows are trajectories,
 #'  columns are time or similar.

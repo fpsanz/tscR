@@ -1,6 +1,5 @@
 # Función para plotear las trajectorias coloreadas según el cluster
 plotCluster <- function(data, clust, ncluster){
-  require(graphics)
   if( length(ncluster)==1 && ncluster == "all"){
     colors <- tscR:::fcolor(clust$clustering)
     matplot(t(data), lty = 1, type = "l", col=colors,

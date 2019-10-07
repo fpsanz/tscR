@@ -3,7 +3,7 @@
 \docType{data}
 \name{tscR}
 \alias{tscR}
-\title{Dummy trajectories}
+\title{Dummy trajectories data}
 \format{A data frame 300 rows and 3 columns:
 \describe{
   \item{T0-T3}{time intervals}

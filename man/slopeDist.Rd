@@ -2,7 +2,7 @@
 % Please edit documentation in R/slopeDist.R
 \name{slopeDist}
 \alias{slopeDist}
-\title{slopeDist}
+\title{Pairwise slope distance}
 \usage{
 slopeDist(x, time)
 }
@@ -16,7 +16,7 @@ columns are time or similar.}
 A dist class object of size NxN, where N is rows number in the input data
 }
 \description{
-Compute pairswise distance based on slopes in a matrix of trajectories
+Compute pairwise distance based on slopes in a matrix of trajectories
 }
 \examples{
 

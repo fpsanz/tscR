@@ -1,6 +1,5 @@
 #calcular senators
 imputeSenators <- function(x, k=100){
-  require("cluster")
   if( 0.1*nrow(x) < k ){
     k = 0.1*nrow(x)
     cat(paste("Setting k to",k,". 10% of total data"))

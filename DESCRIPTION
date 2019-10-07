@@ -1,16 +1,17 @@
 Package: tscR
 Type: Package
-Title: What the Package Does (Title Case)
+Title: A time series clustering package combining slope and Frechet distances
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Author: Pérez-Sanz, Fernando & Riquelme Pérez, Miriam
+Maintainer: Pérez-Sanz, Fernando <fernando.perez8@um.es>
+Description: Clustering for time series data using slope distance and/or shape distance
+Depends: methods, class, tidyverse, kmlShape, graphics, cluster
+License: GPL (>=2)
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.1
 Suggests: 
     knitr,
-    rmarkdown
+    rmarkdown,
+    prettydoc
 VignetteBuilder: knitr

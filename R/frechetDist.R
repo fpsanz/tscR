@@ -1,13 +1,13 @@
-#' frechetDist
+#' Pairwise Frechet distance
 #'
-#' Compute pairswise Frechet distance in a matrix of trajectories
+#' Compute pair-wise Frechet distance in a matrix of trajectories
 #'
 #'
 #' @param x Numeric matrix or data.frame with trajectory values. Rows are trajectories,
 #'  columns are time or similar.
 #' @param time Numeric vector with time data (time intervals), with equal length to columns number in x.
 #'
-#' @details This function is a R adaptation of the distFrechet code from kmlShape package for use with a matrix or
+#' @details This function is a wrapper of the distFrechet code from kmlShape package for use with a matrix or
 #' a data.frame so that the user can compute pairwise distances between all trajectories.
 #'
 #' @return A dist class object of size NxN, where N is rows number in the input data
