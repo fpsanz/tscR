@@ -1,8 +1,19 @@
 useDynLib(tscR)
-export("data","frechetDist",
+export("frechetDist",
        "combineCluster","frechetDistC","getClusters",
        "imputeSenators","imputeSenatorToData","plotCluster",
        "plotClusterSenator","slopeDist")
 exportClasses("imputeSenator")
 importFrom(cluster, pam)
 importFrom(cluster, clara)
+import(RColorBrewer)
+import(class)
+import(kmlShape)
+import(methods)
+import(tidyverse)
+importFrom("grDevices", "colorRamp", "rgb")
+importFrom("graphics", "matplot", "par")
+importFrom("methods", "new")
+importFrom("stats", "dist")
+importFrom("grDevices","colorRamp")
+importFrom("grDevices","rgb")

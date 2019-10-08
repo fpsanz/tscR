@@ -32,10 +32,10 @@ res.cluster <- getClusters(dist_tscR, 3)
 
 }
 \seealso{
-\code{\link[cluster]{pam}, \link{plotClusters}.}
+\code{\link[cluster]{pam}, \link{plotCluster}.}
 }
 \author{
 Fernando Pérez-Sanz (\code{fernando.perez8@um.es})
 
-Miriam Riquelme Pérez (\code{miriam.riquelmep@gmail.com})
+Miriam Riquelme-Pérez (\code{miriam.riquelmep@gmail.com})
 }

@@ -1,6 +1,5 @@
 # Función combinar 2 clusters
 combineCluster <- function(x, y){
-  require(tidyverse, quietly = T)
   if(!inherits(x,"pam") | !inherits(x, "pam")){
     stop("X and Y must be pam objects")
   }

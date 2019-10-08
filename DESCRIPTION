@@ -2,16 +2,15 @@ Package: tscR
 Type: Package
 Title: A time series clustering package combining slope and Frechet distances
 Version: 0.1.0
-Author: Pérez-Sanz, Fernando & Riquelme Pérez, Miriam
+Authors@R: c( person("Fernando","Pérez-Sanz", email = "fernando.perez8@um.es", role = c("aut", "cre")),
+  person("Miriam", "Riquelme-Pérez", email = "miriam.riquelmep@gmail.com", role = "aut"))
 Maintainer: Pérez-Sanz, Fernando <fernando.perez8@um.es>
 Description: Clustering for time series data using slope distance and/or shape distance
-Depends: methods, class, tidyverse, kmlShape, graphics, cluster
+Imports: methods, class, tidyverse, kmlShape, graphics, cluster, RColorBrewer, grDevices,knitr, rmarkdown, prettydoc
+Suggests: knitr, rmarkdown, pretydoc
 License: GPL (>=2)
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.1
-Suggests: 
-    knitr,
-    rmarkdown,
-    prettydoc
 VignetteBuilder: knitr
+

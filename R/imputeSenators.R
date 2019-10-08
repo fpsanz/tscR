@@ -1,4 +1,35 @@
-#calcular senators
+#' Preclustering function for large data
+#'
+#' Compute clustering with clara function to obtain a number of "senators"
+#
+#'
+#' @param x Numeric matrix or data.frame with trajectory values. Rows are trajectories,
+#'  columns are time or similar.
+#' @param k Numeric. Number of senators
+#'
+#' @details Calculates a series of senators representing a large set of trajectories that
+#'  would otherwise be computationally very expensive. For it by means of the "clear" function
+#'   of the cluster package a clustering is made obtaining the centroids as senators.
+#'    These centroids can then be clustered based on the slope distance or Frechet or both.
+#'     Finally, the data set will be assigned to the same cluster your senator is assigned to.
+#'
+#' @return Object of class "imputeSenator". TODO: terminar esto
+#'
+#'
+#' @examples
+#'
+#' data( tscR )
+#' time <- c( 1, 2, 3 )
+#' senators <- imputeSenators( tscR, k = 100 )
+#' senatorDist <- slopeDist( senators$senatorsWide, time )
+#' sClust <- getClusters( senatorDist, k = 5 )
+#' plotCluster( senators$senatorsWide, sClust, 2 )
+#'
+#' @seealso \code{\link{plotClusterSenator}, \link{imputeSenatorToData}.}
+#'
+#' @author  Fernando Pérez-Sanz (\code{fernando.perez8@@um.es})
+#' @author  Miriam Riquelme-Pérez (\code{miriam.riquelmep@@gmail.com})
+
 imputeSenators <- function(x, k=100){
   if( 0.1*nrow(x) < k ){
     k = 0.1*nrow(x)

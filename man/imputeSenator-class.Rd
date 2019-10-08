@@ -24,7 +24,7 @@ This class represents the result imputeSenators function
 \code{\link{imputeSenators}}
 }
 \author{
-Fernando Pérez-Sanz (\code{fernando.perez8@um.es})
+Fernando Pérez Sanz (\code{fernando.perez8@um.es})
 
 Miriam Riquelme Pérez (\code{miriam.riquelmep@gmail.com})
 }

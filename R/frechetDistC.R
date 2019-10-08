@@ -22,10 +22,10 @@
 #' dist_tscR <- frechetDistC(tscR, time)
 #'
 #'
-#' @seealso \code{distFrechet (package kmlShape), \link{slopeDist}, \link{frechetDistR} (R and slower versión than frechetDistC).}
+#' @seealso \code{\link[kmlShape]{distFrechet} (package kmlShape), \link{slopeDist}, \link{frechetDist} (R and slower versión than frechetDistC).}
 #'
 #' @author  Fernando Pérez-Sanz (\code{fernando.perez8@@um.es})
-#' @author  Miriam Riquelme Pérez (\code{miriam.riquelmep@@gmail.com})
+#' @author  Miriam Riquelme-Pérez (\code{miriam.riquelmep@@gmail.com})
 
 
 frechetDistC <- function(x, time){

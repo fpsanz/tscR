@@ -4,7 +4,9 @@
 #'
 #' @format A data frame 300 rows and 3 columns:
 #' \describe{
-#'   \item{T0-T3}{time intervals}
+#'   \item{T1}{time interval}
+#'   \item{T2}{time interval}
+#'   \item{T3}{time interval}
 #' }
 #' @source Simulated data
 "tscR"

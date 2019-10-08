@@ -21,10 +21,10 @@
 #' res.cluster <- getClusters(dist_tscR, 3)
 #'
 #'
-#' @seealso \code{\link[cluster]{pam}, \link{plotClusters}.}
+#' @seealso \code{\link[cluster]{pam}, \link{plotCluster}.}
 #'
 #' @author  Fernando Pérez-Sanz (\code{fernando.perez8@@um.es})
-#' @author  Miriam Riquelme Pérez (\code{miriam.riquelmep@@gmail.com})
+#' @author  Miriam Riquelme-Pérez (\code{miriam.riquelmep@@gmail.com})
 
 
 getClusters <- function(x, k){

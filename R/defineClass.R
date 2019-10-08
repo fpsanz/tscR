@@ -9,7 +9,7 @@
 ##' @slot senators Senators data value
 ##' @slot endCluster Final cluster assignment
 ##' @exportClass imputeSenator
-##' @author  Fernando Pérez-Sanz (\code{fernando.perez8@@um.es})
+##' @author  Fernando Pérez Sanz (\code{fernando.perez8@@um.es})
 ##' @author  Miriam Riquelme Pérez (\code{miriam.riquelmep@@gmail.com})
 ##' @seealso \code{\link{imputeSenators}}
 ##' @keywords classes

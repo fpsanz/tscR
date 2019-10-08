@@ -20,10 +20,10 @@
 #' dist_tscR <- frechetDist(tscR, time)
 #'
 #'
-#' @seealso \code{distFrechet (package kmlShape), \link{slopeDist}, \link{frechetDist} (C andf faster versión than frechetDist).}
+#' @seealso \code{\link[kmlShape]{distFrechet} (package kmlShape), \link{slopeDist}, \link{frechetDistC} (C andf faster versión than frechetDist).}
 #'
 #' @author  Fernando Pérez-Sanz (\code{fernando.perez8@@um.es})
-#' @author  Miriam Riquelme Pérez (\code{miriam.riquelmep@@gmail.com})
+#' @author  Miriam Riquelme-Pérez (\code{miriam.riquelmep@@gmail.com})
 
 
 frechetDist <- function(x, time){
@@ -32,7 +32,6 @@ frechetDist <- function(x, time){
   if(dim(x)[1]>1000){
     warning("Large matrix or data.frame could cause memory problems. You should use imputeSenators function")
   }
-  require(kmlShape, quietly = T)
   if(!is.matrix(x)){
     x <- as.matrix(x)
   }

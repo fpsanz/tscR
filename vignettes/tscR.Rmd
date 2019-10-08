@@ -3,7 +3,7 @@ title: "tscR"
 subtitle: "A R package to cluster time series data or similar longitudinal data, base on slope dist and Frechet dist"
 author: 
 - Pérez-Sanz, Fernando. Murcian Institute of biomedical research 
-- Riquelme Pérez, Miriam. University of South Paris
+- Riquelme-Pérez, Miriam. CNRS - CEA, Univ. Paris-Saclay. MIRCen
 output:
   prettydoc::html_pretty:
     theme: cayman
