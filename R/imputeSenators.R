@@ -13,7 +13,7 @@
 #'    These centroids can then be clustered based on the slope distance or Frechet or both.
 #'     Finally, the data set will be assigned to the same cluster your senator is assigned to.
 #'
-#' @return Object of class "imputeSenator". TODO: terminar esto
+#' @return Object of class imputeSenator.
 #'
 #'
 #' @examples
@@ -36,20 +36,20 @@ imputeSenators <- function(x, k=100){
     cat(paste("Setting k to",k,". 10% of total data"))
   }
   if(k > 100){
-    warning("K higher 100 has several computacional cost. Setting k to 100.")
+    warning("K higher 100 has severe computacional cost. Setting k to 100.")
     k=100
   }
   result <- clara(x, k)
-  senatorsWeight <- as.integer(table(result$clustering))
-  mySenators <- result$clustering
-  senatorsWide <- result$medoids
-  reOrder <- sort(table(result$clustering),decreasing=TRUE)
-  mySenators <- match(mySenators,names(reOrder))
-  senatorsWeight <- as.integer(reOrder)
-  names(senatorsWeight) <- paste("sen",1:k,sep="")
-  senatorsWide <- senatorsWide[as.integer(names(reOrder)),]
-  rownames(senatorsWide) <- names(senatorsWeight)
-  mySenator <- data.frame(id=x,senators=paste("sen",mySenators,sep=""))
-  senatorObj<-list(mySenator=mySenator,senatorsWide=senatorsWide,senatorsWeight=senatorsWeight)
+  #senatorsWeight <- as.integer(table(result$clustering))
+  #mySenators <- result$clustering
+  senatorsData <- result$medoids
+  #reOrder <- sort(table(result$clustering),decreasing=TRUE)
+  #mySenators <- match(mySenators,names(reOrder))
+  senatorsCluster <- seq(1:k)
+  names(senatorsCluster) <- paste("sen",1:k,sep="")
+  #senatorsWide <- senatorsWide[as.integer(names(reOrder)),]
+  rownames(senatorsData) <- names(senatorsCluster)
+  mySenator <- data.frame(id=x,senators=paste("sen",result$clustering,sep=""))
+  senatorObj <- list( data=mySenator, senatorData=senatorsData, senatorCluster=senatorsCluster )
   return(senatorObj)
 }

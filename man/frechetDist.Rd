@@ -31,7 +31,7 @@ dist_tscR <- frechetDist(tscR, time)
 
 }
 \seealso{
-\code{\link{distFrechet} (package kmlShape), \link{slopeDist}, \link{frechetDistC} (C andf faster versión than frechetDist).}
+\code{\link[kmlShape]{distFrechet} (package kmlShape), \link{slopeDist}, \link{frechetDistC} (C andf faster versión than frechetDist).}
 }
 \author{
 Fernando Pérez-Sanz (\code{fernando.perez8@um.es})

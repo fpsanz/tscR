@@ -31,6 +31,9 @@ getClusters <- function(x, k){
   if( !inherits(x, "dist") ){
     stop("X must be a dist class matrix")
   }
+  if(length(x)>1000000){
+    stop("Large distance could cause memory problems. You should use imputeSenators function")
+  }
   myclust <- pam(x, k=k, diss = T)
   return(myclust)
 }
