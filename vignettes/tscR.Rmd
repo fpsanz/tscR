@@ -1,6 +1,6 @@
 ---
-title: "tscR"
-subtitle: "A R package to cluster time series data or similar longitudinal data, base on slope dist and Frechet dist"
+title: "Clustering time series data with tscR"
+subtitle: "A R package to cluster time series data or similar longitudinal data, base on slope and Frechet distance"
 author: 
 - Pérez-Sanz, Fernando. Murcian Institute of biomedical research 
 - Riquelme-Pérez, Miriam. CNRS - CEA, Univ. Paris-Saclay. MIRCen
@@ -12,8 +12,10 @@ output:
     toc: true
 vignette: >
   %\VignetteIndexEntry{tscR}
-  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r, include = FALSE}
@@ -23,19 +25,74 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup, include=FALSE, comment=FALSE}
+```{r setup, include=FALSE, comment=FALSE, echo=FALSE}
 library(tscR)
+library(tidyverse)
+library(grid)
 ```
 
-# punto 1
+# Overview
 
-Esto es el principio de la viñeta
+En algunos estudios o esperimentos disponemos de medidas repetidas en el tiempo sobre las mismas muestras como ocurre en experimentos de expresión génica con medidas repetidas en el tiempo. En otrs ocasiones puede tratarse de medidas sobre las mismas muestras en las que se va variando algún factor (tratamiento, dieta, etc) a lo largo del tiempo. En tales ciscustancias, tendríamos un caso particular de datos longitudinales, en el que el número de medidas a lo largo del tiempo es relativamente bajo y el número de unidades de medida suele ser único (una sóla variable). 
 
-## subpunto 1
+Por ejemplo, en el caso de expresión génica, podríamos considerar la expresión de cada gen como un individuo y las variables serían los momentos temporales en los que se ha medido la expresión de dicho gen.
 
-sasdas
 
-# punto 2
+||  T1|  T2|  T3|
+|:---|:---|:---|:---|
+|$Traj_{1}$| 140| 120| 100|
+|$Traj_{2}$| 100| 120| 140|
+|$Traj_{3}$|  50|  30|  10|
+|$Traj_{4}$|  10|  30|  50|
 
-das
-fdfdafdasfdf
+En estos casos el investigador puede estar interesado en identificar conjuntos de genes con comportamientos similares desde diferentes puntos de vista: (fig.1 B) genes agrupados con niveles de expresión similares (genes con trayectorias cercanas en términos de distancia física), (fig.1 C) genes agrupados con similar evolución independientemente de la "distancia física" a la que se encuentren. Podría tratarse en este segundo caso de genes que responden de manera similar, pero con diferente intensidad. Además podría ser de interés agrupar genes en función de ambos factores (distancia y tendencia) (fig.1 D).
+
+```{r echo=FALSE, fig.align='center'}
+
+df <- data.frame(T1 = c(140,100,50,10), T2=c(120,120,30,30), T3 = c(100,140,10,50))
+
+p1 <- as.data.frame.table(t(df)) %>% 
+ggplot( aes_(~Var1, ~Freq, group=~Var2) ) + 
+  geom_line() + 
+    theme(legend.position = "none", plot.title = element_text(hjust = 0.5)) + 
+  xlab("(A)") + ylab("") + ggtitle(label = "Raw trajectories")
+
+p2 <- as.data.frame.table(t(df)) %>%
+  mutate(Var3 = recode(Var2, "B" = "A")) %>%
+  mutate(Var3 = recode(Var3, "D" = "C")) %>% 
+ggplot( aes_(~Var1, ~Freq, group=~Var2, colour=~Var3) ) + 
+  geom_line() +
+  theme(legend.position = "none", plot.title = element_text(hjust = 0.5)) + 
+  xlab("(B)") + ylab("") + ggtitle(label = "Frechet based cluster")
+
+p3 <-as.data.frame.table(t(df)) %>%
+  mutate(Var3 = recode(Var2, "C" = "A")) %>%
+  mutate(Var3 = recode(Var3, "D" = "B")) %>% 
+ggplot( aes_(~Var1, ~Freq, group=~Var2, colour=~Var3) ) + 
+  geom_line() +
+  theme(legend.position = "none", plot.title = element_text(hjust = 0.5)) + 
+  xlab("(C)") + ylab("") + ggtitle(label = "Slope based cluster")
+
+p4 <-as.data.frame.table(t(df)) %>%
+ggplot( aes_(~Var1, ~Freq, group=~Var2, colour=~Var2) ) + 
+  geom_line() +
+  theme(legend.position = "none", plot.title = element_text(hjust = 0.5)) + 
+  xlab("(D)") + ylab("") + ggtitle(label = "Combined Clusters")
+
+
+gridExtra::grid.arrange(p1,p2,p3,p4, nrow=2,
+                        bottom = textGrob("Fig. 1",gp=gpar(fontsize=14,font=3)))
+
+```
+
+
+Existe en la literatura una enorme cantidad de algoritmos y métricas de disimilitud o distancia, y a pesar de ello, no se suele abordar la problemática del segundo caso. Normalmente, los individuos con trayectorias próximas terminan clasificados en los mismos grupos.
+
+Con este paquete proponemos una metodología que permite agrupar esas trayectorias basándonos en distancias físicas empleando métrica de distancia adaptada a series temporales (distancia de Frechet) y una nueva aproximación basada en similiudes de pendientes de las trayectorias donde éstas se agrupan en función de dicha similitud independientemente de que se encuentren alejadas (e.d. con valores de expresión diferentes).
+
+Además se da la opción de combinar ambas clasificaciones de manera que el resultado final sería el de trayectorias agrupadas en base a sus valores y a sus evoluciones.
+
+Puesto que en gran cantidad de estudios (especialmente en el campo de la bioinformática), el número de trayectorias puede ser muy grande (miles o decenas de miles), se ha desarrollado una metodología en la que mediante un preagrupamiento, se obtiene una serie de "representantes" de las trayectorias, denominados senators, estos senators son entonces clasificados mediante alguna o ambas de las técnicas anteriormente mencionadas. Finalmente el conjunto de trayectorias es asignado al cluster al que su senator ha sido asignado. De esta manera se reduce el coste computacional y el riesgo de desbordar la memoria.
+
+## Getting started
+
