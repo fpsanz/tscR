@@ -6,8 +6,9 @@ author:
 - Riquelme-Pérez, Miriam. CNRS - CEA, Univ. Paris-Saclay. MIRCen
 output:
   prettydoc::html_pretty:
-    theme: cayman
+    theme: hpstr
     highlight: github
+    toc: true
   pdf_document:
     toc: true
 vignette: >
@@ -49,32 +50,48 @@ En estos casos el investigador puede estar interesado en identificar conjuntos d
 
 ```{r echo=FALSE, fig.align='center'}
 
-df <- data.frame(T1 = c(140,100,50,10), T2=c(120,120,30,30), T3 = c(100,140,10,50))
+df <- data.frame(T1 = c(140,100,75,35), T2=c(120,120,50,48), T3 = c(100,140,35,70))
 
-p1 <- as.data.frame.table(t(df)) %>% 
+df1 <- matrix(NA, nrow=10, ncol=3)
+df2 <- matrix(NA, nrow=10, ncol=3)
+df3 <- matrix(NA, nrow=10, ncol=3)
+df4 <- matrix(NA, nrow=10, ncol=3)
+for(i in seq(1,10)){
+  df1[i,] <- jitter(as.numeric(df[1,]), factor = 1.5)
+  df2[i,] <- jitter(as.numeric(df[2,]), factor = 1.5)
+  df3[i,] <- jitter(as.numeric(df[3,]), factor = 1.5)
+  df4[i,] <- jitter(as.numeric(df[4,]), factor = 1.5)
+  }
+df <- as.data.frame(rbind(df1,df2,df3,df4))
+names(df) <- c("T1","T2","T3")
+
+df <- as.data.frame.table(t(df))
+df$Var3 <- rep(c("A","B","C","D"), each=30)
+
+p1 <- df %>% 
 ggplot( aes_(~Var1, ~Freq, group=~Var2) ) + 
   geom_line() + 
     theme(legend.position = "none", plot.title = element_text(hjust = 0.5)) + 
   xlab("(A)") + ylab("") + ggtitle(label = "Raw trajectories")
 
-p2 <- as.data.frame.table(t(df)) %>%
-  mutate(Var3 = recode(Var2, "B" = "A")) %>%
-  mutate(Var3 = recode(Var3, "D" = "C")) %>% 
-ggplot( aes_(~Var1, ~Freq, group=~Var2, colour=~Var3) ) + 
+p2 <- df %>%
+  mutate(Var4 = recode(Var3, "B" = "A")) %>%
+  mutate(Var4 = recode(Var4, "D" = "C")) %>% 
+ggplot( aes_(~Var1, ~Freq, group=~Var2, colour=~Var4) ) + 
   geom_line() +
   theme(legend.position = "none", plot.title = element_text(hjust = 0.5)) + 
   xlab("(B)") + ylab("") + ggtitle(label = "Frechet based cluster")
 
-p3 <-as.data.frame.table(t(df)) %>%
-  mutate(Var3 = recode(Var2, "C" = "A")) %>%
-  mutate(Var3 = recode(Var3, "D" = "B")) %>% 
-ggplot( aes_(~Var1, ~Freq, group=~Var2, colour=~Var3) ) + 
+p3 <- df %>%
+  mutate(Var4 = recode(Var3, "C" = "A")) %>%
+  mutate(Var4 = recode(Var4, "D" = "B")) %>% 
+ggplot( aes_(~Var1, ~Freq, group=~Var2, colour=~Var4) ) + 
   geom_line() +
   theme(legend.position = "none", plot.title = element_text(hjust = 0.5)) + 
   xlab("(C)") + ylab("") + ggtitle(label = "Slope based cluster")
 
-p4 <-as.data.frame.table(t(df)) %>%
-ggplot( aes_(~Var1, ~Freq, group=~Var2, colour=~Var2) ) + 
+p4 <- df %>%
+ggplot( aes_(~Var1, ~Freq, group=~Var2, colour=~Var3) ) + 
   geom_line() +
   theme(legend.position = "none", plot.title = element_text(hjust = 0.5)) + 
   xlab("(D)") + ylab("") + ggtitle(label = "Combined Clusters")
@@ -94,5 +111,5 @@ Además se da la opción de combinar ambas clasificaciones de manera que el resu
 
 Puesto que en gran cantidad de estudios (especialmente en el campo de la bioinformática), el número de trayectorias puede ser muy grande (miles o decenas de miles), se ha desarrollado una metodología en la que mediante un preagrupamiento, se obtiene una serie de "representantes" de las trayectorias, denominados senators, estos senators son entonces clasificados mediante alguna o ambas de las técnicas anteriormente mencionadas. Finalmente el conjunto de trayectorias es asignado al cluster al que su senator ha sido asignado. De esta manera se reduce el coste computacional y el riesgo de desbordar la memoria.
 
-## Getting started
+# Getting started
 
