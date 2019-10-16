@@ -25,8 +25,9 @@ This function is a wrapper of pam (cluster). x must be a dist object obtained fr
 \examples{
 
 data(tscR)
+data <- tscR
 time <- c(1,2,3)
-dist_tscR <- slopeDist(tscR, time)
+dist_tscR <- slopeDist(data, time)
 res.cluster <- getClusters(dist_tscR, 3)
 
 
@@ -35,7 +36,7 @@ res.cluster <- getClusters(dist_tscR, 3)
 \code{\link[cluster]{pam}, \link{plotCluster}.}
 }
 \author{
-Fernando Pérez-Sanz (\code{fernando.perez8@um.es})
+Fernando Pérez-Sanz (\email{fernando.perez8@um.es})
 
-Miriam Riquelme-Pérez (\code{miriam.riquelmep@gmail.com})
+Miriam Riquelme-Pérez (\email{miriam.riquelmep@gmail.com})
 }

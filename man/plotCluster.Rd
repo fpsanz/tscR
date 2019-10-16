@@ -4,14 +4,14 @@
 \alias{plotCluster}
 \title{Plot trajectories based on clustering}
 \usage{
-plotCluster(data, clust, ncluster, ...)
+plotCluster(data, clust, ncluster)
 }
 \arguments{
 \item{data}{Numeric data frame or matrix with de original data.}
 
 \item{clust}{Object of class pam or partition obtained from getClusters output.}
 
-\item{ncluter}{When nclust = "all", plots all trajectories and cluster together in a single plot.
+\item{ncluster}{When nclust = "all", plots all trajectories and cluster together in a single plot.
 If it's an integer, it draws only trajectories that belong to that cluster. Finally, if
 it is a numeric vector, it draws trajectories corresponding to each cluster within a subplot.}
 }
@@ -20,13 +20,13 @@ Draw trajectories and are colored based on their clusters
 }
 \details{
 It draws trajectories where x axis is time data and y axis trayectory values.
-Other graphical parameters of matplot such as lty, type, xlab, ylab, ..., can be provided.
 }
 \examples{
 
 data(tscR)
+data <- tscR
 time <- c(1,2,3)
-fdist <- frechetDistC(tscR, time)
+fdist <- frechetDistC(data, time)
 fclust <- getClusters(fdist, 3)
 plotCluster(df, fclust, "all")
 
@@ -36,7 +36,7 @@ plotCluster(df, fclust, "all")
 \code{\link[graphics]{matplot}, \link{plotClusterSenator}}.
 }
 \author{
-Fernando Pérez-Sanz (\code{fernando.perez8@um.es})
+Fernando Pérez-Sanz (\email{fernando.perez8@um.es})
 
-Miriam Riquelme-Pérez (\code{miriam.riquelmep@gmail.com})
+Miriam Riquelme-Pérez (\email{miriam.riquelmep@gmail.com})
 }

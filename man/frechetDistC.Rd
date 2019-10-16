@@ -28,8 +28,9 @@ It is highly recommended to use this function over frechetDist because it is a l
 \examples{
 
 data(tscR)
+data <- tscR
 time <- c(1,2,3)
-dist_tscR <- frechetDistC(tscR, time)
+dist_tscR <- frechetDistC(data, time)
 
 
 }
@@ -37,7 +38,7 @@ dist_tscR <- frechetDistC(tscR, time)
 \code{\link[kmlShape]{distFrechet} (package kmlShape), \link{slopeDist}, \link{frechetDist} (R and slower versión than frechetDistC).}
 }
 \author{
-Fernando Pérez-Sanz (\code{fernando.perez8@um.es})
+Fernando Pérez-Sanz (\email{fernando.perez8@um.es})
 
-Miriam Riquelme-Pérez (\code{miriam.riquelmep@gmail.com})
+Miriam Riquelme-Pérez (\email{miriam.riquelmep@gmail.com})
 }

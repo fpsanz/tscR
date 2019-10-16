@@ -7,7 +7,7 @@ Authors@R: c( person("Fernando","Pérez-Sanz", email = "fernando.perez8@um.es", 
 Maintainer: Pérez-Sanz, Fernando <fernando.perez8@um.es>
 Description: Clustering for time series data using slope distance and/or shape distance
 Imports: methods, class, tidyverse, kmlShape, graphics, cluster, RColorBrewer, grDevices,knitr, rmarkdown, prettydoc
-Suggests: knitr, rmarkdown, pretydoc
+Suggests: knitr, rmarkdown, prettydoc, grid
 License: GPL (>=2)
 Encoding: UTF-8
 LazyData: true

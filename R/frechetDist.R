@@ -16,14 +16,15 @@
 #' @examples
 #'
 #' data(tscR)
+#' data <- tscR
 #' time <- c(1,2,3)
-#' dist_tscR <- frechetDist(tscR, time)
+#' dist_tscR <- frechetDist(data, time)
 #'
 #'
-#' @seealso \code{\link[kmlShape]{distFrechet} (package kmlShape), \link{slopeDist}, \link{frechetDistC} (C andf faster versión than frechetDist).}
+#' @seealso \code{\link[kmlShape]{distFrechet} (package kmlShape), \link{slopeDist}, \link{frechetDistC} (C and faster versión than frechetDist).}
 #'
-#' @author  Fernando Pérez-Sanz (\code{fernando.perez8@@um.es})
-#' @author  Miriam Riquelme-Pérez (\code{miriam.riquelmep@@gmail.com})
+#' @author  Fernando Pérez-Sanz (\email{fernando.perez8@@um.es})
+#' @author  Miriam Riquelme-Pérez (\email{miriam.riquelmep@@gmail.com})
 
 
 frechetDist <- function(x, time){

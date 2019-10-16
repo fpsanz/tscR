@@ -131,7 +131,7 @@ browseVignettes("tscR")
 ```
 
 
-# Clustering 
+# Simple clustering 
 
 ## Based on slope distance
 
@@ -203,7 +203,7 @@ Se observa que el agrupamiento tiene más que ver con la distancia (en términos
 
 ## Combined clusters
 
-Una tercera opción se combinar los resultados de ambos agrupamientos de manera que se obtendran
+Una tercera opción es combinar los resultados de ambos agrupamientos de manera que se obtendran
 conjuntos de trayectorias agrupados en función tanto de su distancia como de la similitud de sus pendientes.
 
 Para ello, la función `combineCluster` toma como entrada los objetos generados por getClusters generando
@@ -216,4 +216,65 @@ ccluster <- combineCluster(sclust, fclust)
 plotCluster(df, ccluster, c(1:6))
 plotCluster(df, ccluster, "all")
 ```
+
+
+# Clustering large data
+
+En los casos en los que se dispone de una cantidad de trayectorias elevadas (>1000),
+el coste computacional y de memoria puede ser muy elevado, principalmente cuando se trata de calcular las matrices de distancia. Nosotros proponemos hacer un clustering previo con la función `clara`, implementada dentro de `imputeSenators`, con un número de clusters elevado (p.e 100), esto generará 100 centroides, asumiendo que esos 100 centroides pueden representar al conjunto de formas de todas las trayectorias (de ahí el nombre de senators). Una vez obtenidos estos senators, se puede proceder con ellos como en el apartado anterior, agrupando en base distancia de Frechet, pendientes o ambas y generando el número de cluster deseados. Una vez obtenidos los clusters, como se ha guardado a que senator pertenecia cada trayectoria original, mediante `imputeSenatorToData` se asigna cada trayectoria
+a los clusters finales.
+Esta metodología permite clasificar un número muy elevado de trayectorias a un bajo coste computacional y de memoria.
+
+El procedimiento, sería el siguiente: 
+
+En primer lugar obtener los senators
+
+```{r eval=T, echo=T}
+data( "tscR" )
+bigDF <- tscR
+senators <- imputeSenators( bigDF, k = 100 )
+```
+
+El objeto generado (`senators`) es una lista de 3 elementos
+
+* $data: dataframe con los datos originales
+* $senatorData: es una matrix con las trajectorias de los senators
+* $senatorCluster: vector con los clusters de los senators
+
+Como ejemplo clasificaremos en función de la distancia basada en pendientes,
+aunque como se ha mencionado anteriormente se podría hacer en base cualquiera 
+de las distancias e incluso combinarlas.
+
+```{r}
+sdistSen <- frechetDistC( senators$senatorData, time = c( 1, 2, 3 ) ) 
+cSenators <- getClusters( sdistSen, k = 4 )
+```
+
+Se podría visualiza la clasificación realizada a los senators
+
+```{r}
+plotCluster(senators$senatorData, cSenators, "all")
+plotCluster(senators$senatorData, cSenators, c(1,2,3,4))
+```
+
+Finalmente, hay que asignar los datos originales a los nuevos cluster
+
+```{r}
+endCluster <- imputeSenatorToData(senators, cSenators)
+```
+
+Esto crea un objeto de la clase imputeSenator con 3 slots
+
+* @data: contiene el data frame con los datos originales
+* @senators: identifica cada dato de data a que senator pertenece
+* @endcluster: contiene los clusters finales a los que han sido asignados los datos
+
+Y la visualización
+
+```{r}
+plotClusterSenator(endCluster, "all")
+plotClusterSenator(endCluster, c(1,2,3,4))
+```
+
+
 

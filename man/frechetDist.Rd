@@ -25,16 +25,17 @@ a data.frame so that the user can compute pairwise distances between all traject
 \examples{
 
 data(tscR)
+data <- tscR
 time <- c(1,2,3)
-dist_tscR <- frechetDist(tscR, time)
+dist_tscR <- frechetDist(data, time)
 
 
 }
 \seealso{
-\code{\link[kmlShape]{distFrechet} (package kmlShape), \link{slopeDist}, \link{frechetDistC} (C andf faster versión than frechetDist).}
+\code{\link[kmlShape]{distFrechet} (package kmlShape), \link{slopeDist}, \link{frechetDistC} (C and faster versión than frechetDist).}
 }
 \author{
-Fernando Pérez-Sanz (\code{fernando.perez8@um.es})
+Fernando Pérez-Sanz (\email{fernando.perez8@um.es})
 
-Miriam Riquelme-Pérez (\code{miriam.riquelmep@gmail.com})
+Miriam Riquelme-Pérez (\email{miriam.riquelmep@gmail.com})
 }

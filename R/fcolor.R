@@ -1,4 +1,4 @@
-# función para definir n colores en función del numero de clusters
+
 fcolor <- function(x){
   f <- colorRamp( brewer.pal(11,"Spectral"))
   rr <- range(x)

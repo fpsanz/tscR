@@ -13,7 +13,7 @@ This class represents the result imputeSenators function
 \section{Slots}{
 
 \describe{
-\item{\code{data}}{Impute senator result}
+\item{\code{data}}{Dataframe with original data}
 
 \item{\code{senators}}{Senators data value}
 
@@ -24,8 +24,8 @@ This class represents the result imputeSenators function
 \code{\link{imputeSenators}}
 }
 \author{
-Fernando Pérez Sanz (\code{fernando.perez8@um.es})
+Fernando Pérez Sanz (\email{fernando.perez8@um.es})
 
-Miriam Riquelme Pérez (\code{miriam.riquelmep@gmail.com})
+Miriam Riquelme Pérez (\email{miriam.riquelmep@gmail.com})
 }
 \keyword{classes}

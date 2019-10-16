@@ -8,32 +8,38 @@
 #' @param k Numeric. Number of senators
 #'
 #' @details Calculates a series of senators representing a large set of trajectories that
-#'  would otherwise be computationally very expensive. For it by means of the "clear" function
+#'  would otherwise be computationally very expensive. For it, by means of the \link{clara} function
 #'   of the cluster package a clustering is made obtaining the centroids as senators.
 #'    These centroids can then be clustered based on the slope distance or Frechet or both.
 #'     Finally, the data set will be assigned to the same cluster your senator is assigned to.
 #'
-#' @return Object of class imputeSenator.
+#' @return List with three slots:
 #'
+#' \describe{
+#'   \item{data}{Dataframe with original data.}
+#'   \item{senatorData}{Matrix with senator trajectories.}
+#'   \item{senatorCluster}{Vector with senator clusters.}
+#'   }
 #'
 #' @examples
 #'
 #' data( tscR )
+#' data <- tscR
 #' time <- c( 1, 2, 3 )
-#' senators <- imputeSenators( tscR, k = 100 )
-#' senatorDist <- slopeDist( senators$senatorsWide, time )
+#' senators <- imputeSenators( data, k = 100 )
+#' senatorDist <- slopeDist( senators$senatorData, time )
 #' sClust <- getClusters( senatorDist, k = 5 )
 #' plotCluster( senators$senatorsWide, sClust, 2 )
 #'
 #' @seealso \code{\link{plotClusterSenator}, \link{imputeSenatorToData}.}
 #'
-#' @author  Fernando Pérez-Sanz (\code{fernando.perez8@@um.es})
-#' @author  Miriam Riquelme-Pérez (\code{miriam.riquelmep@@gmail.com})
+#' @author  Fernando Pérez-Sanz (\email{fernando.perez8@@um.es})
+#' @author  Miriam Riquelme-Pérez (\email{miriam.riquelmep@@gmail.com})
 
 imputeSenators <- function(x, k=100){
   if( 0.1*nrow(x) < k ){
     k = 0.1*nrow(x)
-    cat(paste("Setting k to",k,". 10% of total data"))
+    cat(paste("Setting k to",k,". 10% total of data"))
   }
   if(k > 100){
     warning("K higher 100 has severe computacional cost. Setting k to 100.")

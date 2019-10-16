@@ -16,15 +16,16 @@
 #' @examples
 #'
 #' data(tscR)
+#' data <- tscR
 #' time <- c(1,2,3)
-#' dist_tscR <- slopeDist(tscR, time)
+#' dist_tscR <- slopeDist(data, time)
 #' res.cluster <- getClusters(dist_tscR, 3)
 #'
 #'
 #' @seealso \code{\link[cluster]{pam}, \link{plotCluster}.}
 #'
-#' @author  Fernando Pérez-Sanz (\code{fernando.perez8@@um.es})
-#' @author  Miriam Riquelme-Pérez (\code{miriam.riquelmep@@gmail.com})
+#' @author  Fernando Pérez-Sanz (\email{fernando.perez8@@um.es})
+#' @author  Miriam Riquelme-Pérez (\email{miriam.riquelmep@@gmail.com})
 
 
 getClusters <- function(x, k){

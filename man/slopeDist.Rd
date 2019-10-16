@@ -21,8 +21,9 @@ Compute pairwise distance based on slopes in a matrix of trajectories
 \examples{
 
 data(tscR)
+data <- tscR
 time <- c(1,2,3)
-dist_tscR <- slopeDist(tscR, time)
+dist_tscR <- slopeDist(data, time)
 
 
 }
@@ -30,7 +31,7 @@ dist_tscR <- slopeDist(tscR, time)
 \code{\link{frechetDistC} and \link{frechetDist} (R and slower versión than frechetDistC.)}
 }
 \author{
-Fernando Pérez-Sanz (\code{fernando.perez8@um.es})
+Fernando Pérez-Sanz (\email{fernando.perez8@um.es})
 
-Miriam Riquelme Pérez (\code{miriam.riquelmep@gmail.com})
+Miriam Riquelme Pérez (\email{miriam.riquelmep@gmail.com})
 }

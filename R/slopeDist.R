@@ -13,14 +13,15 @@
 #' @examples
 #'
 #' data(tscR)
+#' data <- tscR
 #' time <- c(1,2,3)
-#' dist_tscR <- slopeDist(tscR, time)
+#' dist_tscR <- slopeDist(data, time)
 #'
 #'
 #' @seealso \code{\link{frechetDistC} and \link{frechetDist} (R and slower versión than frechetDistC.)}
 #'
-#' @author  Fernando Pérez-Sanz (\code{fernando.perez8@@um.es})
-#' @author  Miriam Riquelme Pérez (\code{miriam.riquelmep@@gmail.com})
+#' @author  Fernando Pérez-Sanz (\email{fernando.perez8@@um.es})
+#' @author  Miriam Riquelme Pérez (\email{miriam.riquelmep@@gmail.com})
 
 
 slopeDist <- function(x, time){
