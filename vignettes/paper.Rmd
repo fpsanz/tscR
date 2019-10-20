@@ -1,0 +1,204 @@
+---
+title: 'tscR: new method for clustering biological time series data'
+subtitle: "A R package to cluster time series data or similar longitudinal data, base on slope and Frechet distance"
+author: 
+- Pérez-Sanz, Fernando. Murcian Institute of biomedical research 
+- Riquelme-Pérez, Miriam. CNRS - CEA, Univ. Paris-Saclay. MIRCen
+output:
+  pdf_document:
+    toc: true
+  prettydoc::html_pretty:
+    theme: hpstr
+    highlight: github
+    toc: true
+vignette: >
+  %\VignetteIndexEntry{tscR}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, eval = TRUE, warning = F, comment = F)
+library(ggplot2)
+library(latex2exp)
+library(tscR)
+library(TSdist)
+```
+
+
+```{r warning=F}
+a <- c(10, 15, 17, 25)
+b <- c(5, 8, 6, 9 )
+c <- c(-19, -14, -12, -4)
+x <- c(1, 2, 3, 4)
+
+df <- as.data.frame(cbind(x,a,b,c))
+
+ggplot(df, aes(x=x))+ 
+  geom_line(aes(y=a), color = "red")+
+  geom_point(y=a, col="red")+
+  geom_line(aes(y=b))+
+  geom_point(y=b)+
+  geom_line(aes(y=c), color = "steelblue")+
+  geom_point(y=c, color="steelblue")+
+  geom_label(aes(x=1.5, y=14), label = TeX("$S_{a1}$")  ) +
+  geom_label(aes(x=2.5, y=17), label = TeX("$S_{a2}$")  ) +
+  geom_label(aes(x=3.5, y=23), label = TeX("$S_{a3}$")  ) +
+  geom_label(aes(x=1.5, y=7.5), label = TeX("$S_{b1}$")  ) +
+  geom_label(aes(x=2.5, y=8), label = TeX("$S_{b2}$")  ) +
+  geom_label(aes(x=3.5, y=9), label = TeX("$S_{b3}$")  ) + 
+  geom_label(aes(x=1.5, y=-15), label = TeX("$S_{c1}$")  ) +
+  geom_label(aes(x=2.5, y=-12), label = TeX("$S_{c2}$")  ) +
+  geom_label(aes(x=3.5, y=-7), label = TeX("$S_{c3}$")  ) +
+  geom_text(aes(x=1, y=12, label = "Traject. a"))+
+  geom_text(aes(x=1, y=4, label = "Traject. b"))+
+  geom_text(aes(x=1, y=-17, label = "Traject. c"))+
+  theme(legend.position = "none")+
+  xlab("") + ylab("")
+
+```
+
+Las lineas de la figura 1 (a,b,c) representan 3 trajectorias (p.e la expresión de 3 genes en 4 momentos diferentes). Las tayectorias a y c son idénticas desde el punto de vista de sus pendientes, solo difieren en la magnitud de si expresión. Por otro lado la trayectoria b desde el punto de vista de la magnitud de expresión estaría más cerca de la trayectoria a que de la c.
+
+Intuitivamente, si tuviésemos que decidir la distancia entre estas trayectorias, pensaríamos que $a$ está más cerca de $b$ que de $c$ y $c$ a su vez más cerca de $b$ que de $a$. Se podrían cuantificar esas distancias con distintas métricas:
+
+* Distancia euclídea
+
+```{r}
+dfx <- as.matrix(rbind(a,b,c))
+dsE <- round( dist(dfx, method = "euclidean", diag = F, upper = F), 3)
+```
+
+$$
+\begin{matrix}
+ & a &b \\ 
+b & 21.24 & \\ 
+c & 54.00 & 39.41 
+\end{matrix}
+$$
+
+Otras medidas de distancia basadas más específicamente en series temporales como las distancias de Frechet o DTW arrojan resultados similares:
+
+```{r}
+time <- c(1,2,3,4)
+dF <- tscR::frechetDistC(dfx, time)
+```
+* Distancia de Frechet
+$$
+\begin{matrix}
+ & a &b \\ 
+b & 16 & \\ 
+c & 29 & 24 
+\end{matrix}
+$$
+
+* Distancia DTW
+
+```{r}
+dt1 <- DTWDistance(a,b)
+dt2 <- DTWDistance(a,c)
+dt3 <- DTWDistance(b,c)
+```
+
+$$
+\begin{matrix}
+ & a &b \\ 
+b & 42 & \\ 
+c & 158 & 104 
+\end{matrix}
+$$
+
+```{r}
+time <- c(1,2,3,4)
+dfx <- as.matrix(rbind(a,b,c))
+N <- dim(dfx)[1]
+M <- dim(dfx)[2]
+m1 <- dfx[, -c(M)]
+m2 <- dfx[, -c(1)]
+mdif <- m2 - m1
+voptimizado <- mdif %*% diag(1/(time[2:M] - time[1:(M - 1)]))
+```
+
+## Distancias basadas en la pendiente
+
+Tal como se comentaba en el apartado anterior, la intuición nos lleva a pensar que dos trayectorias que vemos más cercanas, deben dar un valor de distancia más bajo que dos más alejadas. En ocasiones, puede interesar poder agrupar trayectorias que se  comporten de similar forma (similar evolución) aunque lo hagan con diferente intensidad o magnitud (lineas $a$ y $c$), como podría ocurrir al analizar medidas repetidas en el tiempo sobre los mismos genes y los mismos individuos (ya sea expresion, metilación), variación de la abundancia de organismos a lo largo del tiempo, etc.
+
+Para ello hemos desarrollado una función basada en las pendientes de cada tramo de las trayectorias, donde se va comparando la diferencia de pendientes tramo a tramo. Esta función se desarrolla en dos sencillos pasos:
+
+i) Mediante una operación de resta de matrices se obtiene la diferencia de todos los componentes
+ii) Esta matriz diferencia se multiplica por el vector tiempo
+
+Estas dos operaciones dan como resultado una matriz de pendientes sobre la que se calcula la distancia por pares.
+
+Sean a,b,c tres trajectorias (T) definidas por 4 timestamp (t). 
+
+$$
+Trajectories = \begin{pmatrix}
+a_1 &a_2 & a_3 & a_4 \\ 
+b_1 & b_2 & b_3 & b_4\\ 
+c_1 & c_2 & c_3 & c_4
+\end{pmatrix}
+$$
+Siendo el vector tiempo (componente x en el gráfico) común a todas las trayectorias
+
+$$
+time = \begin{Bmatrix}
+t_1, t_2, t_3, t_4
+\end{Bmatrix}
+$$
+
+De forma que cada punto de cada trajectoria quedará definido por dos coordenadas:
+
+$$
+\begin{pmatrix}
+[a_1,t_1] & \cdots &  [a_n,t_n] \\ 
+\vdots & \ddots& \vdots \\ 
+[T_1,t_1] & \cdots & [T_n,t_n]
+\end{pmatrix}
+$$
+donde T es el número total de trayectorias y n el número de timestamps. 
+
+Las pendientes que definen una trayectoria (a) pueden definirse como
+
+$$
+S_{a1} = \frac{a_{i+1} - a_{i}}{ t_{i+1} - t_{i} }, \cdots, S_{as} = \frac{a_{n} - a_{n-1}}{ t_{n} - t_{n-1} }
+$$
+
+!! TODO: poner esto bien !!
+Para todo i = 1 .. n
+Siendo s = 1 .. n-1
+
+Generalizando para una matriz de trayectorias:
+
+$$
+\begin{pmatrix}
+\begin{pmatrix}
+a_2 & \cdots &  a_{n} \\ 
+\vdots & \ddots& \vdots \\ 
+T_2 & \cdots & T_{n}
+\end{pmatrix} - \begin{pmatrix}
+a_1 & \cdots &  a_{n-1} \\ 
+\vdots & \ddots& \vdots\\ 
+T_1 & \cdots & T_{n-1}
+\end{pmatrix} \end{pmatrix} \cdot \begin{pmatrix} 1/t_1 \\ \vdots \\ 1/t_n\end{pmatrix} =
+\begin{pmatrix}S_{a1} & \cdots & S_{as} \\
+\vdots & \ddots & \vdots \\
+S_{T1} & \cdots & S_{Ts}
+\end{pmatrix}
+$$
+Esta operación de matrices equivalente a recorrer y calcular una a una todas las pendientes es
+computacionalmente mucho más eficiente, permitiendo obtener cientos o miles de pendientes en un tiempo del orden de centésimas de segundo en un pc convencional.
+
+Finalmente se computa la matriz de distancias entre pendiente empleando la distancia euclídea para ello. 
+Como resultado se obtendría para el ejemplo mostrado las siguientes distancias:
+
+
+```{r}
+
+```
+
+
+
+

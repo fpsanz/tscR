@@ -107,7 +107,7 @@ gridExtra::grid.arrange(p1,p2,p3,p4, nrow=2,
 
 Existe en la literatura una enorme cantidad de algoritmos y métricas de disimilitud o distancia, y a pesar de ello, no se suele abordar la problemática del segundo caso (trayectorias con similar pendiente independientemente de la intensidad). Normalmente, los individuos con trayectorias próximas terminan clasificados en los mismos grupos.
 
-Con este paquete proponemos una metodología que permite agrupar esas trayectorias basándonos en distancias físicas empleando métrica de distancia adaptada a series temporales (distancia de Frechet) y una nueva aproximación basada en similiudes de pendientes de las trayectorias, donde éstas se agrupan en función de dicha similitud independientemente de que se encuentren alejadas (e.d. con valores de expresión diferentes).
+Con este paquete proponemos una metodología que permite agrupar esas trayectorias basándonos en distancias físicas empleando métrica de distancia adaptada a series temporales (distancia de Frechet) y una nueva aproximación basada en similitudes de pendientes de las trayectorias, donde éstas se agrupan en función de dicha similitud independientemente de que se encuentren alejadas (e.d. con valores de expresión diferentes).
 
 Además se da la opción de combinar ambas clasificaciones de manera que el resultado final sería el de trayectorias agrupadas en base a sus valores y a sus evoluciones.
 
@@ -250,7 +250,7 @@ sdistSen <- frechetDistC( senators$senatorData, time = c( 1, 2, 3 ) )
 cSenators <- getClusters( sdistSen, k = 4 )
 ```
 
-Se podría visualiza la clasificación realizada a los senators
+Se podría visualizar la clasificación realizada a los senators
 
 ```{r}
 plotCluster(senators$senatorData, cSenators, "all")
