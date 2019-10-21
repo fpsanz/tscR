@@ -1,22 +1,24 @@
 ---
-title: 'tscR: new method for clustering biological time series data'
-subtitle: "A R package to cluster time series data or similar longitudinal data, base on slope and Frechet distance"
-author: 
-- Pérez-Sanz, Fernando. Murcian Institute of biomedical research 
+title: 'tscR: clustering biological time series data base on slopes'
+author:
+- Pérez-Sanz, Fernando. Murcian Institute of biomedical research
 - Riquelme-Pérez, Miriam. CNRS - CEA, Univ. Paris-Saclay. MIRCen
 output:
+  html_document:
+    df_print: paged
+    toc: yes
   pdf_document:
-    toc: true
+    toc: yes
   prettydoc::html_pretty:
-    theme: hpstr
     highlight: github
-    toc: true
-vignette: >
-  %\VignetteIndexEntry{tscR}
-  %\VignetteEncoding{UTF-8}
-  %\VignetteEngine{knitr::rmarkdown}
-editor_options: 
+    theme: hpstr
+    toc: yes
+subtitle: A R package to cluster time series data or similar longitudinal data, base
+  on slope and Frechet distance
+editor_options:
   chunk_output_type: console
+vignette: |
+  %\VignetteIndexEntry{tscR} %\VignetteEncoding{UTF-8} %\VignetteEngine{knitr::rmarkdown}
 ---
 
 ```{r setup, include=FALSE}
@@ -135,10 +137,10 @@ Estas dos operaciones dan como resultado una matriz de pendientes sobre la que s
 Sean a,b,c tres trajectorias (T) definidas por 4 timestamp (t). 
 
 $$
-Trajectories = \begin{pmatrix}
-a_1 &a_2 & a_3 & a_4 \\ 
-b_1 & b_2 & b_3 & b_4\\ 
-c_1 & c_2 & c_3 & c_4
+T_{abc} = \begin{pmatrix}
+T_{a1} & T_{a2} & T_{a3} & T_{a4} \\ 
+T_{b1} & T_{b2} & T_{b3} & T_{b4}\\ 
+T_{c1} & T_{c2} & T_{c3} & T_{c4}
 \end{pmatrix}
 $$
 Siendo el vector tiempo (componente x en el gráfico) común a todas las trayectorias
@@ -153,27 +155,25 @@ De forma que cada punto de cada trajectoria quedará definido por dos coordenada
 
 $$
 \begin{pmatrix}
-[a_1,t_1] & \cdots &  [a_n,t_n] \\ 
+[T_{a1},t_1] & \cdots &  [T_{an},t_n] \\ 
 \vdots & \ddots& \vdots \\ 
-[T_1,t_1] & \cdots & [T_n,t_n]
+[T_{x1},t_1] & \cdots & [T_{xn},t_n]
 \end{pmatrix}
 $$
-donde T es el número total de trayectorias y n el número de timestamps. 
+donde x es el número total de trayectorias y n el número de timestamps. 
 
-Las pendientes que definen una trayectoria (a) pueden definirse como
+Las pendientes que para una trayectoria concreta (a) pueden definirse como
 
 $$
-S_{a1} = \frac{a_{i+1} - a_{i}}{ t_{i+1} - t_{i} }, \cdots, S_{as} = \frac{a_{n} - a_{n-1}}{ t_{n} - t_{n-1} }
+S_{a} = \frac{ T_{ai+1} - T_{ai} } { t_{i+1} - t_{i} } , \cdots, S_{as} = \frac{ T_{an} - T_{an-1}}{ t_{n} - t_{n-1} }
 $$
 
-!! TODO: poner esto bien !!
-Para todo i = 1 .. n
-Siendo s = 1 .. n-1
+Siendo el número de pendiente s = 1, ... , n-1
 
 Generalizando para una matriz de trayectorias:
 
 $$
-\begin{pmatrix}
+\begin{bmatrix}
 \begin{pmatrix}
 a_2 & \cdots &  a_{n} \\ 
 \vdots & \ddots& \vdots \\ 
@@ -182,23 +182,35 @@ T_2 & \cdots & T_{n}
 a_1 & \cdots &  a_{n-1} \\ 
 \vdots & \ddots& \vdots\\ 
 T_1 & \cdots & T_{n-1}
-\end{pmatrix} \end{pmatrix} \cdot \begin{pmatrix} 1/t_1 \\ \vdots \\ 1/t_n\end{pmatrix} =
+\end{pmatrix} \end{bmatrix} \cdot \begin{pmatrix} 1/t_1 \\ \vdots \\ 1/t_n\end{pmatrix} =
 \begin{pmatrix}S_{a1} & \cdots & S_{as} \\
 \vdots & \ddots & \vdots \\
 S_{T1} & \cdots & S_{Ts}
 \end{pmatrix}
 $$
-Esta operación de matrices equivalente a recorrer y calcular una a una todas las pendientes es
+Esta operación de matrices equivalente a recorrer y calcular una a una todas las pendientes, es
 computacionalmente mucho más eficiente, permitiendo obtener cientos o miles de pendientes en un tiempo del orden de centésimas de segundo en un pc convencional.
 
-Finalmente se computa la matriz de distancias entre pendiente empleando la distancia euclídea para ello. 
-Como resultado se obtendría para el ejemplo mostrado las siguientes distancias:
+Finalmente se computa la matriz de distancias entre pendientes empleando para ello la distancia euclídea. 
+Para dos trayectorias $a$ y $b$ sería:
 
+$$
+\sqrt{(S_{a1}-S_{b1})^2 + \cdots+(S_{as}-S_{bs})^2 }
+$$
 
+En el caso de las tres trayectorias mostradas en el ejemplo, el resultado sería:
+ 
 ```{r}
-
+dist(voptimizado)
 ```
 
-
+$$
+\begin{matrix}
+ & a &b \\ 
+b & 6.71 & \\ 
+c & 0.00 & 6.71 
+\end{matrix}
+$$
+Como puede observarse, ahora la distancia entre $a$ y $c$ es 0 ya que son dos trayectorias con pendientes idénticas, mientras que la distancia de ambas trayectrias a $b$ es la misma, a pesar de estar a más alejada de ella $c$ que $a$, lo que demuestra que este método para obtener distancia entre dos trayectorias basada en las pendientes en totalmente invariante a la magnitud o intensidad de las trayectorias, sólo depende de los valores de sus pendientes.
 
 

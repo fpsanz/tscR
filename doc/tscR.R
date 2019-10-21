@@ -93,7 +93,7 @@ plotCluster(data = df, clust = sclust, ncluster = "all")
 plotCluster(df, sclust, 1)
 
 ## ----eval=T, echo=T------------------------------------------------------
-plotCluster(df, sclust, c(1,2))
+plotCluster(df, sclust, c(1:2))
 
 ## ----eval = TRUE, echo = TRUE--------------------------------------------
 fdist <- frechetDistC(df, time)
