@@ -5,9 +5,10 @@ author:
 - Pérez-Sanz, Fernando. Murcian Institute of biomedical research 
 - Riquelme-Pérez, Miriam. CNRS - CEA, Univ. Paris-Saclay. MIRCen
 output:
-  pdf_document:
+  prettydoc::html_pretty:
+    theme: hpstr
+    highlight: github
     toc: true
-
 vignette: >
   %\VignetteIndexEntry{tscR}
   %\VignetteEncoding{UTF-8}
@@ -372,4 +373,19 @@ plotClusterSenator(endCluster, c(1,2,3,4))
 ```
 
 
+# References
 
+Abanda, A. et  al. (2019).  A review on distance based time series classification. Data Mining and Knowledge Discovery,
+33 (2), 378–412.
+
+Ceccarello, M. et al. (2019). FRESH: Fréchet Similarity with Hashing. In Algorithms and data structures , pages 254–268. Springer. 
+
+Eiter, T. and Mannila, H. (1994). Computing discrete Fréchet distance. Notes, 94, 64. 
+
+Genolini, C. et al. (2016).  kmlShape: An efficient method to cluster longitudinal data (Time-Series) according to their shapes. PLoS ONE, 11 (6), e0150738.
+
+Golumbeanu,  M. (2019).   TMixClust:  Time Series Clustering of Gene Expression with Gaussian Mixed-Effects Models and
+Smoothing Splines. Hornik, K. (2005). A {CLUE} for {CLUster Ensembles}. Journal of Statistical Software, 14 (12).
+
+Kumar, L. and Futschik, M. E. (2007). Mfuzz: A software package for soft clustering of microarray data. Bioinformation
+,2 (1), 5–7.
