@@ -5,12 +5,9 @@ author:
 - Pérez-Sanz, Fernando. Murcian Institute of biomedical research 
 - Riquelme-Pérez, Miriam. CNRS - CEA, Univ. Paris-Saclay. MIRCen
 output:
-  prettydoc::html_pretty:
-    theme: hpstr
-    highlight: github
-    toc: true
   pdf_document:
     toc: true
+
 vignette: >
   %\VignetteIndexEntry{tscR}
   %\VignetteEncoding{UTF-8}

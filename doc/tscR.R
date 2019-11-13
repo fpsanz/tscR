@@ -8,8 +8,56 @@ knitr::opts_chunk$set(
 library(tscR)
 library(tidyverse)
 library(grid)
+library(ggplot2)
+library(latex2exp)
+library(tscR)
+library(TSdist)
 
-## ----echo=FALSE, fig.align='center'--------------------------------------
+## ----warning=F, fig.cap="Figure 1", echo=FALSE---------------------------
+a <- c(10, 15, 17, 25)
+b <- c(5, 8, 6, 9 )
+c <- c(-19, -14, -12, -4)
+x <- c(1, 2, 3, 4)
+
+df <- as.data.frame(cbind(x,a,b,c))
+
+ggplot(df, aes(x=x))+ 
+  geom_line(aes(y=a), color = "red")+
+  geom_point(y=a, col="red")+
+  geom_line(aes(y=b))+
+  geom_point(y=b)+
+  geom_line(aes(y=c), color = "steelblue")+
+  geom_point(y=c, color="steelblue")+
+  geom_label(aes(x=1.5, y=14), label = TeX("$S_{a1}$")   ) +
+  geom_label(aes(x=2.5, y=17), label = TeX("$S_{a2}$")  ) +
+  geom_label(aes(x=3.5, y=23), label = TeX("$S_{a3}$")  ) +
+  geom_label(aes(x=1.5, y=7.5), label = TeX("$S_{b1}$")  ) +
+  geom_label(aes(x=2.5, y=8), label = TeX("$S_{b2}$")  ) +
+  geom_label(aes(x=3.5, y=9), label = TeX("$S_{b3}$")  ) + 
+  geom_label(aes(x=1.5, y=-15), label = TeX("$S_{c1}$")  ) +
+  geom_label(aes(x=2.5, y=-12), label = TeX("$S_{c2}$")  ) +
+  geom_label(aes(x=3.5, y=-7), label = TeX("$S_{c3}$")  ) +
+  geom_text(aes(x=1, y=12, label = "Traject. a"))+
+  geom_text(aes(x=1, y=4, label = "Traject. b"))+
+  geom_text(aes(x=1, y=-17, label = "Traject. c"))+
+  theme(legend.position = "none")+
+  xlab("") + ylab("")
+
+
+## ----echo=FALSE----------------------------------------------------------
+dfx <- as.matrix(rbind(a,b,c))
+dsE <- round( dist(dfx, method = "euclidean", diag = F, upper = F), 3)
+
+## ----echo=FALSE----------------------------------------------------------
+time <- c(1,2,3,4)
+dF <- tscR::frechetDistC(dfx, time)
+
+## ----echo=FALSE----------------------------------------------------------
+dt1 <- DTWDistance(a,b)
+dt2 <- DTWDistance(a,c)
+dt3 <- DTWDistance(b,c)
+
+## ----echo=FALSE, fig.align='center', fig.cap="Figure 2"------------------
 
 df <- data.frame(T1 = c(140,100,75,35), T2=c(120,120,50,48), T3 = c(100,140,35,70))
 
