@@ -4,10 +4,10 @@ author:
 - Pérez-Sanz, Fernando. Murcian Institute of biomedical research
 - Riquelme-Pérez, Miriam. CNRS - CEA, Univ. Paris-Saclay. MIRCen
 output:
+  pdf_document:
+    toc: yes
   html_document:
     df_print: paged
-    toc: yes
-  pdf_document:
     toc: yes
   prettydoc::html_pretty:
     highlight: github
@@ -30,6 +30,8 @@ library(TSdist)
 ```
 
 
+Las lineas de la figura 1 (`a`,`b`,`c`) representan 3 trajectorias (p.e la expresión de 3 genes en 4 momentos diferentes). Las tayectorias $T_a$ y $T_c$ son idénticas desde el punto de vista de sus pendientes, solo difieren en la magnitud de si expresión. Por otro lado la trayectoria $T_b$ desde el punto de vista de la magnitud de expresión estaría más cerca de la trayectoria $T_a$ que de la $T_c$.
+
 ```{r warning=F}
 a <- c(10, 15, 17, 25)
 b <- c(5, 8, 6, 9 )
@@ -45,7 +47,7 @@ ggplot(df, aes(x=x))+
   geom_point(y=b)+
   geom_line(aes(y=c), color = "steelblue")+
   geom_point(y=c, color="steelblue")+
-  geom_label(aes(x=1.5, y=14), label = TeX("$S_{a1}$")  ) +
+  geom_label(aes(x=1.5, y=14), label = TeX("$S_{a1}$")   ) +
   geom_label(aes(x=2.5, y=17), label = TeX("$S_{a2}$")  ) +
   geom_label(aes(x=3.5, y=23), label = TeX("$S_{a3}$")  ) +
   geom_label(aes(x=1.5, y=7.5), label = TeX("$S_{b1}$")  ) +
@@ -62,9 +64,7 @@ ggplot(df, aes(x=x))+
 
 ```
 
-Las lineas de la figura 1 (a,b,c) representan 3 trajectorias (p.e la expresión de 3 genes en 4 momentos diferentes). Las tayectorias a y c son idénticas desde el punto de vista de sus pendientes, solo difieren en la magnitud de si expresión. Por otro lado la trayectoria b desde el punto de vista de la magnitud de expresión estaría más cerca de la trayectoria a que de la c.
-
-Intuitivamente, si tuviésemos que decidir la distancia entre estas trayectorias, pensaríamos que $a$ está más cerca de $b$ que de $c$ y $c$ a su vez más cerca de $b$ que de $a$. Se podrían cuantificar esas distancias con distintas métricas:
+Intuitivamente, si tuviésemos que decidir la distancia entre estas trayectorias, pensaríamos que $T_a$ está más cerca de $T_b$ que de $T_c$. A su vez, $T_c$ está más cerca de $T_b$ que de $T_a$. Se podrían cuantificar esas distancias con distintas métricas:
 
 * Distancia euclídea
 
@@ -125,7 +125,7 @@ voptimizado <- mdif %*% diag(1/(time[2:M] - time[1:(M - 1)]))
 
 ## Distancias basadas en la pendiente
 
-Tal como se comentaba en el apartado anterior, la intuición nos lleva a pensar que dos trayectorias que vemos más cercanas, deben dar un valor de distancia más bajo que dos más alejadas. En ocasiones, puede interesar poder agrupar trayectorias que se  comporten de similar forma (similar evolución) aunque lo hagan con diferente intensidad o magnitud (lineas $a$ y $c$), como podría ocurrir al analizar medidas repetidas en el tiempo sobre los mismos genes y los mismos individuos (ya sea expresion, metilación), variación de la abundancia de organismos a lo largo del tiempo, etc.
+Tal como se comentaba en el apartado anterior, la intuición nos lleva a pensar que dos trayectorias que vemos más cercanas, deben dar un valor de distancia más bajo que dos más alejadas. En ocasiones, puede interesar poder agrupar trayectorias que se  comporten de similar forma (similar evolución) aunque lo hagan con diferente intensidad o magnitud (lineas $T_a$ y $T_c$), como podría ocurrir al analizar medidas repetidas en el tiempo sobre los mismos genes y los mismos individuos (ya sea expresion, metilación), variación de la abundancia de organismos a lo largo del tiempo, etc.
 
 Para ello hemos desarrollado una función basada en las pendientes de cada tramo de las trayectorias, donde se va comparando la diferencia de pendientes tramo a tramo. Esta función se desarrolla en dos sencillos pasos:
 
@@ -134,7 +134,7 @@ ii) Esta matriz diferencia se multiplica por el vector tiempo
 
 Estas dos operaciones dan como resultado una matriz de pendientes sobre la que se calcula la distancia por pares.
 
-Sean a,b,c tres trajectorias (T) definidas por 4 timestamp (t). 
+Sean a,b,c tres trajectorias (T) definidas a lo largo de 4 instantes en el tiempo (t). 
 
 $$
 T_{abc} = \begin{pmatrix}
@@ -162,7 +162,7 @@ $$
 $$
 donde x es el número total de trayectorias y n el número de timestamps. 
 
-Las pendientes que para una trayectoria concreta (a) pueden definirse como
+Las pendientes para una trayectoria concreta ($T_a$) pueden definirse como
 
 $$
 S_{a} = \frac{ T_{ai+1} - T_{ai} } { t_{i+1} - t_{i} } , \cdots, S_{as} = \frac{ T_{an} - T_{an-1}}{ t_{n} - t_{n-1} }
@@ -201,7 +201,7 @@ $$
 En el caso de las tres trayectorias mostradas en el ejemplo, el resultado sería:
  
 ```{r}
-dist(voptimizado)
+ds <-dist(voptimizado)
 ```
 
 $$

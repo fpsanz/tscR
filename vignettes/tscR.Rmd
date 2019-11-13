@@ -30,38 +30,128 @@ knitr::opts_chunk$set(
 library(tscR)
 library(tidyverse)
 library(grid)
+library(ggplot2)
+library(latex2exp)
+library(tscR)
+library(TSdist)
 ```
 
 # Overview
 
-En algunos estudios se dispone de medidas repetidas en el tiempo sobre las mismas muestras.
-Este puede ser el caso  de ciertos experimentos de expresión génica, metilación, metagenómica, etc.,
-donde a los individuos se les mide determinadacaracterística repetidamente a lo largo del tiempo.
-Esto puede ser porque interese medir el efecto de cierto tratamiento a lo largo del tiempo, o bien porque interese medir la respuesta al incrementar la dosis suministrada de alguna sustancia.
-En cualquier caso, el interés no es tanto ver la diferencia media entre grupos (p.e expresión diferencial), sino ver la evolución de la respuesta a lo largo del tiempo, y sobre todo generar grupos de elementos (genes, bacterias, etc) que tengan similar comportamiento. 
+El clustering es una técnica de aprendizaje no supervisado, ampliamente empleado en diversas áreas tales como machine learning, bioinformatics, image analysis o pattern recognition. El clustering en gene expression data es útil para encontrar grupos de genes con comportamiento similar y puede proporcionar información muy útil para el entendimiento de determinados procesos biológicos.
+
+Este clustering de gene expression data puede realizarse sobre genes, muestras o sobre la variable tiempo. En este último caso, denominado time series genes expression, es posible identificar genes con similar dinámica y obtener conjuntos de respuestas ante determinadas situaciones. Esto ha permitido resaltar (insight) respuesta a stress ambiental, ritmos circadianos, respuesta a algún tratamiento, etc.
+
+Existen en R algunos paquetes genéricos para el análisis del clustering de series temporales -- _kmlShape_ , _dtwclust_, _clue_, _TSclust_ -- sin embargo, no hay un único algoritmo de clustering que resuelva satisfactoriamente todos los problemas. Cada problema de clustering requiere una aproximación específica. Existen paquetes orientados al análsis de time series gene expression como _TSMixclust_, _ctsGE_, _MFuzz_. _Mfuzz_ minimiza la alta sensibilidad al ruido de otros algoritmos mediante un fuzzy clustering, por su parte _TSmixClust_ es un soft-clustering que emplea mixed-effects models with nonparametric smoothing spline fitting. _ctsGE_ busca minimizar noisy data a traves de 2 pasos, primero se define grupos en base a sus perfiles de expresión (expression index) y posteriormente, los genes del mismo index son clustered aplicando kmeans. A pesar de que estos métodos buscan resolver la importante tarea de minimizar el efecto del ruido en el clustering, generalmente genes con similar expresión (en magnitud) terminan en los mismos grupos. 
+
+En ocasiones, sin embargo, el mayor interés del investigador es encontrar genes con patrones similares (similares trayectorias) aunque estas ocurran a niveles de expresión diferentes. Se busca por tanto genes con una evolución temporal similar independientemente de la magnitud de la expresión.
+
+Supongamos que sometemos a un individuo a un tratamiento, y medimos la expresión de tres (o diez mil) de sus genes
+en el momento en que comenzamos a suministrarle el tratamiento, a la semana, a las dos semanas y a las 3 semanas (Fig. 1).
+
+Las lineas de la figura 1 (`a`,`b`,`c`) representan 3 trajectorias (p.e la expresión de 3 genes en 4 momentos diferentes). Las tayectorias $T_a$ y $T_c$ son idénticas desde el punto de vista de sus pendientes, solo difieren en la magnitud de si expresión. Por otro lado la trayectoria $T_b$ desde el punto de vista de la magnitud de expresión estaría más cerca de la trayectoria $T_a$ que de la $T_c$.
+
+```{r warning=F, fig.cap="Figure 1", echo=FALSE}
+a <- c(10, 15, 17, 25)
+b <- c(5, 8, 6, 9 )
+c <- c(-19, -14, -12, -4)
+x <- c(1, 2, 3, 4)
+
+df <- as.data.frame(cbind(x,a,b,c))
+
+ggplot(df, aes(x=x))+ 
+  geom_line(aes(y=a), color = "red")+
+  geom_point(y=a, col="red")+
+  geom_line(aes(y=b))+
+  geom_point(y=b)+
+  geom_line(aes(y=c), color = "steelblue")+
+  geom_point(y=c, color="steelblue")+
+  geom_label(aes(x=1.5, y=14), label = TeX("$S_{a1}$")   ) +
+  geom_label(aes(x=2.5, y=17), label = TeX("$S_{a2}$")  ) +
+  geom_label(aes(x=3.5, y=23), label = TeX("$S_{a3}$")  ) +
+  geom_label(aes(x=1.5, y=7.5), label = TeX("$S_{b1}$")  ) +
+  geom_label(aes(x=2.5, y=8), label = TeX("$S_{b2}$")  ) +
+  geom_label(aes(x=3.5, y=9), label = TeX("$S_{b3}$")  ) + 
+  geom_label(aes(x=1.5, y=-15), label = TeX("$S_{c1}$")  ) +
+  geom_label(aes(x=2.5, y=-12), label = TeX("$S_{c2}$")  ) +
+  geom_label(aes(x=3.5, y=-7), label = TeX("$S_{c3}$")  ) +
+  geom_text(aes(x=1, y=12, label = "Traject. a"))+
+  geom_text(aes(x=1, y=4, label = "Traject. b"))+
+  geom_text(aes(x=1, y=-17, label = "Traject. c"))+
+  theme(legend.position = "none")+
+  xlab("") + ylab("")
+
+```
+
+Intuitivamente, si tuviésemos que decidir la distancia entre estas trayectorias, pensaríamos que $T_a$ está más cerca de $T_b$ que de $T_c$. A su vez, $T_c$ está más cerca de $T_b$ que de $T_a$. Se podrían cuantificar esas distancias con distintas métricas:
+
+* Distancia euclídea
+
+```{r echo=FALSE}
+dfx <- as.matrix(rbind(a,b,c))
+dsE <- round( dist(dfx, method = "euclidean", diag = F, upper = F), 3)
+```
+
+$$
+\begin{matrix}
+ & a &b \\ 
+b & 21.24 & \\ 
+c & 54.00 & 39.41 
+\end{matrix}
+$$
+
+Otras medidas de distancia basadas más específicamente en series temporales como las distancias de Frechet o DTW arrojan resultados similares:
+
+```{r echo=FALSE}
+time <- c(1,2,3,4)
+dF <- tscR::frechetDistC(dfx, time)
+```
+* Distancia de Frechet
+$$
+\begin{matrix}
+ & a &b \\ 
+b & 16 & \\ 
+c & 29 & 24 
+\end{matrix}
+$$
+
+* Distancia DTW
+
+```{r echo=FALSE}
+dt1 <- DTWDistance(a,b)
+dt2 <- DTWDistance(a,c)
+dt3 <- DTWDistance(b,c)
+```
+
+$$
+\begin{matrix}
+ & a &b \\ 
+b & 42 & \\ 
+c & 158 & 104 
+\end{matrix}
+$$
 
 
-Supongamos que sometemos a un individuo a un tratamiento, y medimos la expresión de cuatro (o diez mil) de sus genes
-en el momento en que comenzamos a suministrarle el tratamiento, a la semana y a las dos semanas (Tabla 1).
+Sin embargo, si el interés es conocer qué trayectorias tienen similar comportamiento a lo largo del tiempo independientemente de la magnitud de su expresión, hay que recurrir a criterios puramente geométricos y buscar similitud basada es sus pendientes. En este caso la matriz de distancias quedaría de la siguiente manera:
 
-||  T1|  T2|  T3|
-|:---|:---|:---|:---|
-|$Traj_{1}$| 140| 120| 100|
-|$Traj_{2}$| 100| 120| 140|
-|$Traj_{3}$|  50|  30|  10|
-|$Traj_{4}$|  10|  30|  50|
-|$Traj_{n}$|  ...|...|...|
-Table: 1
+$$
+\begin{matrix}
+ & a &b \\ 
+b & 6.71 & \\ 
+c & 0.00 & 6.71 
+\end{matrix}
+$$
+Donde se puede ver que la distancia entre la trayectoria $a$ y $c$ es cero pues son dos líneas con idénticas pendientes y la distancia de ambas a $b$ es la misma.
 
-En estos casos el investigador puede estar interesado en identificar y agrupar conjuntos de genes con comportamientos similares desde diferentes puntos de vista:
+Por tanto nos podemos encontrar que un investigador esté interesado en identificar y agrupar conjuntos de genes con comportamientos similares desde diferentes puntos de vista:
 
-* Genes agrupados con niveles de expresión similares, es decir genes cuyas trayectorias estén próximas en términos de distancia física (fig.1 B).
+* Genes agrupados con niveles de expresión similares, es decir genes cuyas trayectorias estén próximas en términos de distancia física (fig.2 B).
 
-* Genes agrupados con similar evolución independientemente de la "distancia física" a la que se encuentren. Se Trata en este segundo caso de genes que responden de manera similar, pero con diferente intensidad (fig.1 C).
+* Genes agrupados con similar evolución independientemente de la "distancia física" a la que se encuentren. Se Trata en este segundo caso de genes que responden de manera similar, pero con diferente intensidad (fig.2 C).
 
-* Además podría ser de interés agrupar genes en función de ambos factores (distancia + tendencia) (fig.1 D).
+* Además podría ser de interés agrupar genes en función de ambos factores (distancia + tendencia) (fig.2 D).
 
-```{r echo=FALSE, fig.align='center'}
+```{r echo=FALSE, fig.align='center', fig.cap="Figure 2"}
 
 df <- data.frame(T1 = c(140,100,75,35), T2=c(120,120,50,48), T3 = c(100,140,35,70))
 
@@ -115,24 +205,21 @@ gridExtra::grid.arrange(p1,p2,p3,p4, nrow=2,
 
 ```
 
-
-Existe en la literatura una enorme cantidad de algoritmos y métricas de disimilitud o distancia, y a pesar de ello, no se suele abordar la problemática del segundo caso (trayectorias con similar pendiente independientemente de la intensidad). Normalmente, los individuos con trayectorias próximas terminan clasificados en los mismos grupos.
-
 Con este paquete proponemos una metodología que permite agrupar esas trayectorias basándonos en distancias físicas empleando métrica de distancia adaptada a series temporales (distancia de Frechet) y una nueva aproximación basada en similitudes de pendientes de las trayectorias, donde éstas se agrupan en función de dicha similitud independientemente de la distancia a la que se encuentren..
 
 Además se da la opción de combinar ambas clasificaciones de manera que el resultado final sería el de trayectorias agrupadas en base a sus valores y a sus evoluciones.
 
-Puesto que en gran cantidad de estudios (especialmente en el campo de la bioinformática), el número de trayectorias puede ser muy grande (miles o decenas de miles), se ha desarrollado una metodología en la que mediante un preagrupamiento, se obtiene una serie de "representantes" de las trayectorias, denominados senators, estos senators son entonces clasificados mediante alguno de los algoritmos propuestos. Finalmente el conjunto de trayectorias es asignado al cluster al que su senator ha sido asignado. De esta manera se reduce el coste computacional y el riesgo de desbordar la memoria.
+Puesto que en gran cantidad de estudios (especialmente en diferentes disciplinas ómicas), el número de trayectorias puede ser muy grande (miles o decenas de miles), se ha desarrollado una metodología basada en la existente en el paquete _kmlShape_, en la que mediante un preagrupamiento, se obtiene una serie de "representantes" de las trayectorias, denominados senators, estos senators son entonces clasificados mediante alguno de los algoritmos propuestos. Finalmente el conjunto de trayectorias es asignado al cluster al que su senator ha sido asignado. De esta manera se reduce el coste computacional y el riesgo de desbordar la memoria.
 
 # Getting started
 
-To install with `install_github`.
+Install with `install_github`.
 
 ```{r eval = FALSE, echo=TRUE}
 devtools::install_github("fpsanz/tscR")
 ```
 
-To read the vignette (this document:
+Read the vignette (this document):
 
 ```{r eval = TRUE}
 library(tscR)
