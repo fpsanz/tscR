@@ -5,6 +5,8 @@ author:
 - Pérez-Sanz, Fernando. Murcian Institute of biomedical research 
 - Riquelme-Pérez, Miriam. CNRS - CEA, Univ. Paris-Saclay. MIRCen
 output:
+#  pdf_document:
+#    toc: true
   prettydoc::html_pretty:
     theme: hpstr
     highlight: github
@@ -389,3 +391,20 @@ Smoothing Splines. Hornik, K. (2005). A {CLUE} for {CLUster Ensembles}. Journal 
 
 Kumar, L. and Futschik, M. E. (2007). Mfuzz: A software package for soft clustering of microarray data. Bioinformation
 ,2 (1), 5–7.
+
+Maechler, M. et  al. (2019). cluster: Cluster Analysis Basics and Extensions. 
+
+McDowell, I. C. et al. (2018). Clustering gene expression time series data using an infinite Gaussian process mixture model.PLoS Computational Biology, 14 (1), e1005896.
+
+Montero, P. and Vilar, J. A. (2014). TSclust: An R package for time series clustering. Journal of Statistical Software, 62 (1), 1–43.
+
+Oyelade, J. et al. (2016). Clustering algorithms: Their application to gene expression data. Bioinformatics and Biology Insights, 10, 237–253. 
+
+R Core Team (2019). R: A Language and Environment for Statistical Computing. 
+
+Sardá-Espinosa, A.(2019). Time-Series Clustering in R Using the dtwclust Package. The R Journal.
+
+Sharabi-Schwager, M. and Ophir, R. (2019). ctsGE: Clustering of Time Series Gene Expression data. 
+
+Toohey, K. (2015). SimilarityMeasures: Trajectory Similari ty Measures
+
