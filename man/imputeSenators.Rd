@@ -39,7 +39,7 @@ time <- c( 1, 2, 3 )
 senators <- imputeSenators( data, k = 100 )
 senatorDist <- slopeDist( senators$senatorData, time )
 sClust <- getClusters( senatorDist, k = 5 )
-plotCluster( senators$senatorsWide, sClust, 2 )
+plotCluster( senators$senatorData, sClust, 2 )
 
 }
 \seealso{

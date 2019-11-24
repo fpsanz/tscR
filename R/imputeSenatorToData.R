@@ -32,7 +32,7 @@
 #' @author  Miriam Riquelme-Pérez (\email{miriam.riquelmep@@gmail.com})
 
 imputeSenatorToData <- function(senators, clusters){
-  require(tidyverse)
+  #require(tidyverse)
   data <- senators$data
   data <- data %>% mutate_at(vars(senators), as.character)
   senData <- senators$senatorData

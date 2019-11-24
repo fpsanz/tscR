@@ -28,7 +28,7 @@ data <- tscR
 time <- c(1,2,3)
 fdist <- frechetDistC(data, time)
 fclust <- getClusters(fdist, 3)
-plotCluster(df, fclust, "all")
+plotCluster(data, fclust, "all")
 
 
 }

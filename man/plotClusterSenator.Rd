@@ -25,7 +25,7 @@ data( tscR )
 data <- tscR
 time <- c( 1, 2, 3 )
 senators <- imputeSenators( data, k = 100 )
-senatorDist <- slopeDist( senators$senatorsWide, time )
+senatorDist <- slopeDist( senators$senatorData, time )
 sClust <- getClusters( senatorDist, k = 5 )
 endCluster <- imputeSenatorToData( senators, sClust )
 plotClusterSenator( endCluster, "all" )
