@@ -89,7 +89,7 @@ Intuitivamente, si tuviésemos que decidir la distancia entre estas trayectorias
 
 ```{r echo=FALSE}
 dfx <- as.matrix(rbind(a,b,c))
-dsE <- round( dist(dfx, method = "euclidean", diag = F, upper = F), 3)
+dsE <- round( dist(dfx, method = "euclidean", diag = FALSE, upper = FALSE), 3)
 ```
 
 $$

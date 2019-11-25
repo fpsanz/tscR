@@ -1,6 +1,6 @@
 #' Preclustering function for large data
 #'
-#' Compute clustering with clara function to obtain a number of "senators"
+#' Compute clustering with clara function to obtain a number of 'senators'
 #
 #'
 #' @param x Numeric matrix or data.frame with trajectory values. Rows are trajectories,
@@ -36,26 +36,35 @@
 #' @author  Fernando Pérez-Sanz (\email{fernando.perez8@@um.es})
 #' @author  Miriam Riquelme-Pérez (\email{miriam.riquelmep@@gmail.com})
 
-imputeSenators <- function(x, k=100){
-  if( 0.1*nrow(x) < k ){
-    k = 0.1*nrow(x)
-    cat(paste("Setting k to",k,". 10% total of data"))
-  }
-  if(k > 100){
-    warning("K higher 100 has severe computacional cost. Setting k to 100.")
-    k=100
-  }
-  result <- clara(x, k)
-  #senatorsWeight <- as.integer(table(result$clustering))
-  #mySenators <- result$clustering
-  senatorsData <- result$medoids
-  #reOrder <- sort(table(result$clustering),decreasing=TRUE)
-  #mySenators <- match(mySenators,names(reOrder))
-  senatorsCluster <- seq(1:k)
-  names(senatorsCluster) <- paste("sen",1:k,sep="")
-  #senatorsWide <- senatorsWide[as.integer(names(reOrder)),]
-  rownames(senatorsData) <- names(senatorsCluster)
-  mySenator <- data.frame(id=x,senators=paste("sen",result$clustering,sep=""))
-  senatorObj <- list( data=mySenator, senatorData=senatorsData, senatorCluster=senatorsCluster )
-  return(senatorObj)
+imputeSenators <- function(x, k = 100) {
+    if (0.1 * nrow(x) < k) {
+        k = 0.1 * nrow(x)
+        cat(paste("Setting k to", k, ". 10% total of data"))
+    }
+    if (k > 100) {
+        warning("K higher 100 has severe computacional cost. Setting k to 100.")
+        k = 100
+    }
+    result <- clara(x, k)
+    # senatorsWeight <-
+    # as.integer(table(result$clustering)) mySenators
+    # <- result$clustering
+    senatorsData <- result$medoids
+    # reOrder <-
+    # sort(table(result$clustering),decreasing=TRUE)
+    # mySenators <- match(mySenators,names(reOrder))
+    senatorsCluster <- seq(1, k)
+    names(senatorsCluster) <- paste("sen", seq_len(k),
+                                    sep = "")
+    # senatorsWide <-
+    # senatorsWide[as.integer(names(reOrder)),]
+    rownames(senatorsData) <- names(senatorsCluster)
+    mySenator <- data.frame(id = x,
+                            senators = paste("sen",
+                                             result$clustering, sep = ""))
+    senatorObj <-
+        list(data = mySenator,
+             senatorData = senatorsData,
+             senatorCluster = senatorsCluster)
+    return(senatorObj)
 }

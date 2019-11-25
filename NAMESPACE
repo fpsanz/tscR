@@ -1,8 +1,8 @@
 useDynLib(tscR)
 export("frechetDist",
-       "combineCluster","frechetDistC","getClusters",
-       "imputeSenators","imputeSenatorToData","plotCluster",
-       "plotClusterSenator","slopeDist")
+    "combineCluster","frechetDistC","getClusters",
+    "imputeSenators","imputeSenatorToData","plotCluster",
+    "plotClusterSenator","slopeDist")
 exportClasses("imputeSenator")
 importFrom("cluster", "pam")
 importFrom("cluster", "clara")
@@ -26,3 +26,4 @@ import("latex2exp")
 import("prettydoc")
 import("rmarkdown")
 import("dplyr")
+import("stats")

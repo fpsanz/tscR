@@ -13,6 +13,9 @@ plotClusterSenator(x, ncluster)
 If it's an integer, it draws only trajectories that belong to that cluster. Finally, if
 it is a numeric vector, it draws trajectories corresponding to each cluster within a subplot.}
 }
+\value{
+Plot clustered trayectories
+}
 \description{
 Draw trajectories and are colored based on their clusters with imputesenator object
 }
@@ -29,5 +32,4 @@ senatorDist <- slopeDist( senators$senatorData, time )
 sClust <- getClusters( senatorDist, k = 5 )
 endCluster <- imputeSenatorToData( senators, sClust )
 plotClusterSenator( endCluster, "all" )
-
 }

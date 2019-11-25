@@ -21,7 +21,7 @@ x <- c(1, 2, 3, 4)
 
 df <- as.data.frame(cbind(x,a,b,c))
 
-ggplot(df, aes(x=x))+ 
+ggplot(df, aes(x=x))+
   geom_line(aes(y=a), color = "red")+
   geom_point(y=a, col="red")+
   geom_line(aes(y=b))+
@@ -33,7 +33,7 @@ ggplot(df, aes(x=x))+
   geom_label(aes(x=3.5, y=23), label = TeX("$S_{a3}$")  ) +
   geom_label(aes(x=1.5, y=7.5), label = TeX("$S_{b1}$")  ) +
   geom_label(aes(x=2.5, y=8), label = TeX("$S_{b2}$")  ) +
-  geom_label(aes(x=3.5, y=9), label = TeX("$S_{b3}$")  ) + 
+  geom_label(aes(x=3.5, y=9), label = TeX("$S_{b3}$")  ) +
   geom_label(aes(x=1.5, y=-15), label = TeX("$S_{c1}$")  ) +
   geom_label(aes(x=2.5, y=-12), label = TeX("$S_{c2}$")  ) +
   geom_label(aes(x=3.5, y=-7), label = TeX("$S_{c3}$")  ) +
@@ -46,7 +46,7 @@ ggplot(df, aes(x=x))+
 
 ## ----echo=FALSE----------------------------------------------------------
 dfx <- as.matrix(rbind(a,b,c))
-dsE <- round( dist(dfx, method = "euclidean", diag = F, upper = F), 3)
+dsE <- round( dist(dfx, method = "euclidean", diag = FALSE, upper = FALSE), 3)
 
 ## ----echo=FALSE----------------------------------------------------------
 time <- c(1,2,3,4)
@@ -77,32 +77,32 @@ names(df) <- c("T1","T2","T3")
 df <- as.data.frame.table(t(df))
 df$Var3 <- rep(c("A","B","C","D"), each=30)
 
-p1 <- df %>% 
-ggplot( aes_(~Var1, ~Freq, group=~Var2) ) + 
-  geom_line() + 
-    theme(legend.position = "none", plot.title = element_text(hjust = 0.5)) + 
+p1 <- df %>%
+ggplot( aes_(~Var1, ~Freq, group=~Var2) ) +
+  geom_line() +
+    theme(legend.position = "none", plot.title = element_text(hjust = 0.5)) +
   xlab("(A)") + ylab("") + ggtitle(label = "Raw trajectories")
 
 p2 <- df %>%
   mutate(Var4 = recode(Var3, "B" = "A")) %>%
-  mutate(Var4 = recode(Var4, "D" = "C")) %>% 
-ggplot( aes_(~Var1, ~Freq, group=~Var2, colour=~Var4) ) + 
+  mutate(Var4 = recode(Var4, "D" = "C")) %>%
+ggplot( aes_(~Var1, ~Freq, group=~Var2, colour=~Var4) ) +
   geom_line() +
-  theme(legend.position = "none", plot.title = element_text(hjust = 0.5)) + 
+  theme(legend.position = "none", plot.title = element_text(hjust = 0.5)) +
   xlab("(B)") + ylab("") + ggtitle(label = "Frechet based cluster")
 
 p3 <- df %>%
   mutate(Var4 = recode(Var3, "C" = "A")) %>%
-  mutate(Var4 = recode(Var4, "D" = "B")) %>% 
-ggplot( aes_(~Var1, ~Freq, group=~Var2, colour=~Var4) ) + 
+  mutate(Var4 = recode(Var4, "D" = "B")) %>%
+ggplot( aes_(~Var1, ~Freq, group=~Var2, colour=~Var4) ) +
   geom_line() +
-  theme(legend.position = "none", plot.title = element_text(hjust = 0.5)) + 
+  theme(legend.position = "none", plot.title = element_text(hjust = 0.5)) +
   xlab("(C)") + ylab("") + ggtitle(label = "Slope based cluster")
 
 p4 <- df %>%
-ggplot( aes_(~Var1, ~Freq, group=~Var2, colour=~Var3) ) + 
+ggplot( aes_(~Var1, ~Freq, group=~Var2, colour=~Var3) ) +
   geom_line() +
-  theme(legend.position = "none", plot.title = element_text(hjust = 0.5)) + 
+  theme(legend.position = "none", plot.title = element_text(hjust = 0.5)) +
   xlab("(D)") + ylab("") + ggtitle(label = "Combined clusters")
 
 
@@ -159,7 +159,7 @@ bigDF <- tscR
 senators <- imputeSenators( bigDF, k = 100 )
 
 ## ------------------------------------------------------------------------
-sdistSen <- frechetDistC( senators$senatorData, time = c( 1, 2, 3 ) ) 
+sdistSen <- frechetDistC( senators$senatorData, time = c( 1, 2, 3 ) )
 cSenators <- getClusters( sdistSen, k = 4 )
 
 ## ------------------------------------------------------------------------
