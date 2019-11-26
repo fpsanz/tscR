@@ -11,7 +11,7 @@ plotCluster(data, clust, ncluster)
 
 \item{clust}{Object of class pam or partition obtained from getClusters output.}
 
-\item{ncluster}{When nclust = "all", plots all trajectories and cluster together in a single plot.
+\item{ncluster}{When nclust = 'all', plots all trajectories and cluster together in a single plot.
 If it's an integer, it draws only trajectories that belong to that cluster. Finally, if
 it is a numeric vector, it draws trajectories corresponding to each cluster within a subplot.}
 }
@@ -31,7 +31,7 @@ data <- tscR
 time <- c(1,2,3)
 fdist <- frechetDistC(data, time)
 fclust <- getClusters(fdist, 3)
-plotCluster(data, fclust, "all")
+plotCluster(data, fclust, 'all')
 
 
 }

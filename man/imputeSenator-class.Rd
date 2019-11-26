@@ -4,10 +4,10 @@
 \name{imputeSenator-class}
 \alias{imputeSenator-class}
 \alias{show,imputeSenator-method}
-\title{Class "inputeSenator"
+\title{Class 'inputeSenator'
 This class represents the result imputeSenators function}
 \description{
-Class "inputeSenator"
+Class 'inputeSenator'
 This class represents the result imputeSenators function
 }
 \section{Slots}{

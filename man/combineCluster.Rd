@@ -12,14 +12,15 @@ combineCluster(x, y)
 \item{y}{Object of class pam. Output of getClusters.}
 }
 \value{
-Object of class "pam". See \code{\link[cluster]{pam.object}} for details
+Object of class 'pam'. See \code{\link[cluster]{pam.object}}
+ for details
 }
 \description{
 Combine clusters from two different clustering
 }
 \details{
 This function combines the clusters obtained in getClusters
- with "slope" distance and the ones obtained with Frechet distance,
+ with 'slope' distance and the ones obtained with Frechet distance,
   resulting in a new clustering combining both distances.
 }
 \examples{

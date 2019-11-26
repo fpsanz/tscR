@@ -12,15 +12,17 @@ getClusters(x, k)
 \item{k}{Numeric. Number of clusters}
 }
 \value{
-Object of class "pam". See \code{\link[cluster]{pam.object}} for details
+Object of class 'pam'. See \code{\link[cluster]{pam.object}} for details
 }
 \description{
 Compute clustering with pam function and a distance class object.
 }
 \details{
-This function is a wrapper of pam (cluster). x must be a dist object obtained from frechetdist, slopedist
+This function is a wrapper of pam (cluster). x must be a
+dist object obtained from frechetdist, slopedist
  or any other distance metric on condition
- that it be an object of the dist class and has dimensions nxn, where n is equal to the number of trajectories.
+ that it be an object of the dist class and has dimensions nxn,
+ where n is equal to the number of trajectories.
 }
 \examples{
 

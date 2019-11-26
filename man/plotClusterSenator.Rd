@@ -9,7 +9,7 @@ plotClusterSenator(x, ncluster)
 \arguments{
 \item{x}{imputesenator class object from \link{imputeSenatorToData} function.}
 
-\item{ncluster}{When nclust = "all", plots all trajectories and cluster together in a single plot.
+\item{ncluster}{When nclust = 'all', plots all trajectories and cluster together in a single plot.
 If it's an integer, it draws only trajectories that belong to that cluster. Finally, if
 it is a numeric vector, it draws trajectories corresponding to each cluster within a subplot.}
 }
@@ -31,5 +31,5 @@ senators <- imputeSenators( data, k = 100 )
 senatorDist <- slopeDist( senators$senatorData, time )
 sClust <- getClusters( senatorDist, k = 5 )
 endCluster <- imputeSenatorToData( senators, sClust )
-plotClusterSenator( endCluster, "all" )
+plotClusterSenator( endCluster, 'all' )
 }

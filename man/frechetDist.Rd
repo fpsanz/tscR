@@ -7,20 +7,24 @@
 frechetDist(x, time)
 }
 \arguments{
-\item{x}{Numeric matrix or data.frame with trajectory values. Rows are trajectories,
-columns are time or similar.}
+\item{x}{Numeric matrix or data.frame with trajectory values.
+Rows are trajectories, columns are time or similar.}
 
-\item{time}{Numeric vector with time data (time intervals), with equal length to columns number in x.}
+\item{time}{Numeric vector with time data (time intervals),
+with equal length to columns number in x.}
 }
 \value{
-A dist class object of size NxN, where N is rows number in the input data
+A dist class object of size NxN, where N is rows number
+ in the input data
 }
 \description{
 Compute pair-wise Frechet distance in a matrix of trajectories
 }
 \details{
-This function is a wrapper of the distFrechet code from kmlShape package for use with a matrix or
-a data.frame so that the user can compute pairwise distances between all trajectories.
+This function is a wrapper of the distFrechet code from
+ kmlShape package for use with a matrix or
+a data.frame so that the user can compute
+ pairwise distances between all trajectories.
 }
 \examples{
 
@@ -32,7 +36,9 @@ dist_tscR <- frechetDist(data, time)
 
 }
 \seealso{
-\code{\link[kmlShape]{distFrechet} (package kmlShape), \link{slopeDist}, \link{frechetDistC} (C and faster versión than frechetDist).}
+\code{\link[kmlShape]{distFrechet} (package kmlShape),
+ \link{slopeDist}, \link{frechetDistC}
+  (C and faster versión than frechetDist).}
 }
 \author{
 Fernando Pérez-Sanz (\email{fernando.perez8@um.es})

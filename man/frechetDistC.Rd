@@ -7,23 +7,31 @@
 frechetDistC(x, time)
 }
 \arguments{
-\item{x}{Numeric matrix or data.frame with trajectory values. Rows are trajectories,
-columns are time or similar.}
+\item{x}{Numeric matrix or data.frame with trajectory values.
+Rows are trajectories,
+ columns are time or similar.}
 
-\item{time}{Numeric vector with time data (time intervals), with equal length to columns number in x.}
+\item{time}{Numeric vector with time data (time intervals),
+with equal length to columns number in x.}
 }
 \value{
-A dist class object of size NxN, where N is rows number in the input data
+A dist class object of size NxN, where N is rows number in
+ the input data
 }
 \description{
-Compute pairwise Frechet distance in a matrix of trajectories. This function is a C implementation and
+Compute pairwise Frechet distance in a matrix of trajectories.
+ This function is a C implementation and
 a lot faster version than frechetDist
 }
 \details{
-This function is a C adaptation of the distFrechet code from kmlShape package for use with a matrix or
-a dataframe so that the user can compute pairwise distances between all trajectories.
+This function is a C adaptation of the distFrechet
+ code from
+ kmlShape package for use with a matrix or
+a dataframe so that the user can compute pairwise distances between
+all trajectories.
 
-It is highly recommended to use this function over frechetDist because it is a lot faster.
+It is highly recommended to use this function over frechetDist
+ because it is a lot faster.
 }
 \examples{
 
@@ -35,7 +43,8 @@ dist_tscR <- frechetDistC(data, time)
 
 }
 \seealso{
-\code{\link[kmlShape]{distFrechet} (package kmlShape), \link{slopeDist}, \link{frechetDist} (R and slower versión than frechetDistC).}
+\code{\link[kmlShape]{distFrechet} (package kmlShape),
+ \link{slopeDist}, \link{frechetDist} (R and slower versión than frechetDistC).}
 }
 \author{
 Fernando Pérez-Sanz (\email{fernando.perez8@um.es})

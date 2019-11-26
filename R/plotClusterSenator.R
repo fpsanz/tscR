@@ -30,7 +30,7 @@ plotClusterSenator <- function(x, ncluster) {
     if (length(ncluster) == 1 && ncluster == "all") {
         clusteres <- as.numeric(gsub("end", "", x@endCluster))
         colors <- tscR:::fcolor(clusteres)
-        matplot(t(x@data), lty = 1, type = "l", col = colors, 
+        matplot(t(x@data), lty = 1, type = "l", col = colors,
             ylab = "Trajectories", xlab = "Time")
     }
     if (length(ncluster) == 1 && ncluster != "all") {
@@ -38,8 +38,8 @@ plotClusterSenator <- function(x, ncluster) {
         posCluster <- which(clusteres %in% ncluster)
         posCluster2 <- clusteres[posCluster]
         colors <- "red"
-        matplot(t(x@data[clusteres == ncluster, ]), 
-            lty = 1, type = "l", col = colors, ylab = "Trajectories", 
+        matplot(t(x@data[clusteres == ncluster, ]),
+            lty = 1, type = "l", col = colors, ylab = "Trajectories",
             xlab = "Time")
     }
     if (is.numeric(ncluster) & length(ncluster) > 1) {
@@ -51,8 +51,8 @@ plotClusterSenator <- function(x, ncluster) {
         par(mfrow = c(n, 2))
         c = 1
         for (i in ncluster) {
-            matplot(t(x@data[clusteres == i, ]), lty = 1, 
-                type = "l", col = colors[c], ylab = "Trajectories", 
+            matplot(t(x@data[clusteres == i, ]), lty = 1,
+                type = "l", col = colors[c], ylab = "Trajectories",
                 xlab = "Time")
             c = c + 1
         }

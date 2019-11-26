@@ -22,7 +22,7 @@ List with three slots:
   }
 }
 \description{
-Compute clustering with clara function to obtain a number of "senators"
+Compute clustering with clara function to obtain a number of 'senators'
 }
 \details{
 Calculates a series of senators representing a large set of trajectories that
