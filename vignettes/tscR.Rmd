@@ -38,16 +38,38 @@ library(TSdist)
 
 # Overview
 
-El clustering es una técnica de aprendizaje no supervisado, ampliamente empleado en diversas áreas tales como machine learning, bioinformatics, image analysis o pattern recognition. El clustering en gene expression data es útil para encontrar grupos de genes con comportamiento similar y puede proporcionar información muy útil para el entendimiento de determinados procesos biológicos.
+<!-- El clustering es una técnica de aprendizaje no supervisado, ampliamente empleado en diversas áreas tales como machine learning, bioinformatics, image analysis o pattern recognition. El clustering en gene expression data es útil para encontrar grupos de genes con comportamiento similar y puede proporcionar información muy útil para el entendimiento de determinados procesos biológicos. -->
 
-Este clustering de gene expression data puede realizarse sobre genes, muestras o sobre la variable tiempo. En este último caso, denominado time series genes expression, es posible identificar genes con similar dinámica y obtener conjuntos de respuestas ante determinadas situaciones. Esto ha permitido resaltar (insight) respuesta a stress ambiental, ritmos circadianos, respuesta a algún tratamiento, etc.
+Clustering is an unsupervised machine learning technique widely used in several disciplines
+such as machine learning, bioinformatics, image analysis or pattern recognition.
+Clustering gene expression -- as well as in other omic disciplines -- is useful for finding
+gene sets with similar behaviour and could provide useful information for the understanding
+of certain biological processes.
 
-Existen en R algunos paquetes genéricos para el análisis del clustering de series temporales -- _kmlShape_ , _dtwclust_, _clue_, _TSclust_ -- sin embargo, no hay un único algoritmo de clustering que resuelva satisfactoriamente todos los problemas. Cada problema de clustering requiere una aproximación específica. Existen paquetes orientados al análsis de time series gene expression como _TSMixclust_, _ctsGE_, _MFuzz_. _Mfuzz_ minimiza la alta sensibilidad al ruido de otros algoritmos mediante un fuzzy clustering, por su parte _TSmixClust_ es un soft-clustering que emplea mixed-effects models with nonparametric smoothing spline fitting. _ctsGE_ busca minimizar noisy data a traves de 2 pasos, primero se define grupos en base a sus perfiles de expresión (expression index) y posteriormente, los genes del mismo index son clustered aplicando kmeans. A pesar de que estos métodos buscan resolver la importante tarea de minimizar el efecto del ruido en el clustering, generalmente genes con similar expresión (en magnitud) terminan en los mismos grupos. 
 
-En ocasiones, sin embargo, el mayor interés del investigador es encontrar genes con patrones similares (similares trayectorias) aunque estas ocurran a niveles de expresión diferentes. Se busca por tanto genes con una evolución temporal similar independientemente de la magnitud de la expresión.
+<!-- Este clustering de gene expression data puede realizarse sobre genes, muestras o sobre la variable tiempo. En este último caso, denominado time series genes expression, es posible identificar genes con similar dinámica y obtener conjuntos de respuestas ante determinadas situaciones. Esto ha permitido resaltar (insight) respuesta a stress ambiental, ritmos circadianos, respuesta a algún tratamiento, etc.-->
 
-Supongamos que sometemos a un individuo a un tratamiento, y medimos la expresión de tres (o diez mil) de sus genes
-en el momento en que comenzamos a suministrarle el tratamiento, a la semana, a las dos semanas y a las 3 semanas (Fig. 1).
+Clustering gene expression can be performed based on genes, samples, or time variable.
+In the last case, named clustering time series gene expression, it's possible identify
+genes with similar dynamic response to certain conditions.
+
+<!-- Existen en R algunos paquetes genéricos para el análisis del clustering de series temporales -- _kmlShape_ , _dtwclust_, _clue_, _TSclust_ -- sin embargo, no hay un único algoritmo de clustering que resuelva satisfactoriamente todos los problemas. Cada problema de clustering requiere una aproximación específica. Existen paquetes orientados al análsis de time series gene expression como _TSMixclust_, _ctsGE_, _MFuzz_. _Mfuzz_ minimiza la alta sensibilidad al ruido de otros algoritmos mediante un fuzzy clustering, por su parte _TSmixClust_ es un soft-clustering que emplea mixed-effects models with nonparametric smoothing spline fitting. _ctsGE_ busca minimizar noisy data a traves de 2 pasos, primero se define grupos en base a sus perfiles de expresión (expression index) y posteriormente, los genes del mismo index son clustered aplicando kmeans. A pesar de que estos métodos buscan resolver la importante tarea de minimizar el efecto del ruido en el clustering, generalmente genes con similar expresión (en magnitud) terminan en los mismos grupos. -->
+
+Despite the fact that there are several generic R packages for the analysis of clustering time series
+-- _kmlShape_ , _dtwclust_, _clue_, _TSclust_ --, there is no a single algorithm
+that satisfactorily solves all problems and each clustering problem requires a specific approach. 
+There are other specific packages to clustering time series in gene expression which seek 
+minimize the high sensitivity to noise of other generic algorithms --  _TSMixclust_, _ctsGE_, _MFuzz_ -- .
+Although these methods attempt to solve the difficult task of minimizing noise effect, in general, genes with similar magnitude of expression end up in same clusters and that is not always what the researcher may be seeking.
+
+<!-- En ocasiones, sin embargo, el mayor interés del investigador es encontrar genes con patrones similares (similares trayectorias) aunque estas ocurran a niveles de expresión diferentes. Se busca por tanto genes con una evolución temporal similar independientemente de la magnitud de la expresión. -->
+
+Sometimes the researcher's greatest interest is in revealing genes with similar time pattern (similar trajectories), although their expression levels are very different. Therefore, genes with similar time evolution are searched regardless of the expression magnitude.
+
+<!-- Supongamos que sometemos a un individuo a un tratamiento, y medimos la expresión de tres (o diez mil) de sus genes
+en el momento en que comenzamos a suministrarle el tratamiento, a la semana, a las dos semanas y a las 3 semanas (Fig. 1).-->
+
+Let's suppose we subject an individual to a treatment and measure the expression of three (or ten thousand) genes at the time the treatment begins, at one week two weeks and three weeks (Fig. 1).
 
 Las lineas de la figura 1 (`a`,`b`,`c`) representan 3 trajectorias (p.e la expresión de 3 genes en 4 momentos diferentes). Las tayectorias $T_a$ y $T_c$ son idénticas desde el punto de vista de sus pendientes, solo difieren en la magnitud de si expresión. Por otro lado la trayectoria $T_b$ desde el punto de vista de la magnitud de expresión estaría más cerca de la trayectoria $T_a$ que de la $T_c$.
 
