@@ -52,7 +52,7 @@ Occasionally, however, the researcher's main interest lies in finding genes with
 
 Let us suppose that we subject an individual to a treatment and measure the expression of three (or ten thousand) of his genes at the time the treatment begins, at one week, two weeks and three weeks after (Fig. 1).
 
-Las lineas de la figura 1 (`a`,`b`,`c`) representan 3 trajectorias (p.e la expresión de 3 genes en 4 momentos diferentes). Las tayectorias $T_a$ y $T_c$ son idénticas desde el punto de vista de sus pendientes, solo difieren en la magnitud de si expresión. Por otro lado la trayectoria $T_b$ desde el punto de vista de la magnitud de expresión estaría más cerca de la trayectoria $T_a$ que de la $T_c$.
+The lines in figure 1 (`a`,`b`,`c`) represent 3 tracks (e.g. the expression of 3 genes at 4 different times). The trajectories $T_a$ and $T_c$ are identical in terms of slopes, they only differ in the magnitude of their expression. On the other hand the track $T_b$ would be closer to the track $T_a$ than to $T_c$.
 
 ```{r warning=F, fig.cap="Figure 1", echo=FALSE}
 a <- c(10, 15, 17, 25)
@@ -86,9 +86,9 @@ ggplot(df, aes(x=x))+
 
 ```
 
-Intuitivamente, si tuviésemos que decidir la distancia entre estas trayectorias, pensaríamos que $T_a$ está más cerca de $T_b$ que de $T_c$. A su vez, $T_c$ está más cerca de $T_b$ que de $T_a$. Se podrían cuantificar esas distancias con distintas métricas:
+Intuitively, if we had to determine the distance between these trajectories, we would think that $T_a$ is closer to $T_b$ than to $T_c$. In addition, $T_c$ is closer to $T_b$ than to $T_a$. You could quantify those distances with different metrics:
 
-* Distancia euclídea
+* Euclidean distance
 
 ```{r echo=FALSE}
 dfx <- as.matrix(rbind(a,b,c))
@@ -103,13 +103,15 @@ c & 54.00 & 39.41
 \end{matrix}
 $$
 
-Otras medidas de distancia basadas más específicamente en series temporales como las distancias de Frechet o DTW arrojan resultados similares:
+Other distance metrics based more specifically on time series such as Frechet or DTW provide similar results:
 
 ```{r echo=FALSE}
 time <- c(1,2,3,4)
 dF <- tscR::frechetDistC(dfx, time)
 ```
-* Distancia de Frechet
+
+* Frechet Distance
+
 $$
 \begin{matrix}
  & a &b \\ 
@@ -118,7 +120,7 @@ c & 29 & 24
 \end{matrix}
 $$
 
-* Distancia DTW
+* DTW Distance
 
 ```{r echo=FALSE}
 dt1 <- DTWDistance(a,b)
@@ -128,31 +130,30 @@ dt3 <- DTWDistance(b,c)
 
 $$
 \begin{matrix}
- & a &b \\ 
+ & a & b \\ 
 b & 42 & \\ 
 c & 158 & 104 
 \end{matrix}
 $$
 
-
-Sin embargo, si el interés es conocer qué trayectorias tienen similar comportamiento a lo largo del tiempo independientemente de la magnitud de su expresión, hay que recurrir a criterios puramente geométricos y buscar similitud basada es sus pendientes. En este caso la matriz de distancias quedaría de la siguiente manera:
+However, if the main interest is to determine which trajectories have similar behaviour over time regardless of the magnitude of their expression, it is necessary to use purely geometric criteria and look for similarities based on their slopes. In this case, the distance matrix would look as follows:
 
 $$
 \begin{matrix}
- & a &b \\ 
+ & a & b \\ 
 b & 6.71 & \\ 
 c & 0.00 & 6.71 
 \end{matrix}
 $$
-Donde se puede ver que la distancia entre la trayectoria $a$ y $c$ es cero pues son dos líneas con idénticas pendientes y la distancia de ambas a $b$ es la misma.
+Where it can be seen that the distance between the $a$ and $c$ trajectory is zero because these are two lines with identical slopes and the distance from both to $b$ is the same.
 
-Por tanto nos podemos encontrar que un investigador esté interesado en identificar y agrupar conjuntos de genes con comportamientos similares desde diferentes puntos de vista:
+Therefore, we might find a researcher interested in identifying and grouping sets of genes with similar behaviours according to different points of view:
 
-* Genes agrupados con niveles de expresión similares, es decir genes cuyas trayectorias estén próximas en términos de distancia física (fig.2 B).
+* Genes clustered with similar levels of expression, i.e. genes whose trajectories are close in terms of physical distance (fig.2 B).
 
-* Genes agrupados con similar evolución independientemente de la "distancia física" a la que se encuentren. Se Trata en este segundo caso de genes que responden de manera similar, pero con diferente intensidad (fig.2 C).
+* Genes grouped with similar evolution regardless of their physical distance. In this second scenario, we are dealing with genes that respond in a similar way, but with different intensity (fig.2 C).
 
-* Además podría ser de interés agrupar genes en función de ambos factores (distancia + tendencia) (fig.2 D).
+* It might also be interesting to group genes according to both factors (distance + tendency) (fig.2 D).
 
 ```{r echo=FALSE, fig.align='center', fig.cap="Figure 2"}
 
@@ -208,7 +209,7 @@ gridExtra::grid.arrange(p1,p2,p3,p4, nrow=2,
 
 ```
 
-Con este paquete proponemos una metodología que permite agrupar esas trayectorias basándonos en distancias físicas empleando métrica de distancia adaptada a series temporales (distancia de Frechet) y una nueva aproximación basada en similitudes de pendientes de las trayectorias, donde éstas se agrupan en función de dicha similitud independientemente de la distancia a la que se encuentren..
+Con este paquete proponemos una metodología que permite agrupar esas trayectorias basándonos en distancias físicas empleando métrica de distancia adaptada a series temporales (distancia de Frechet) y una nueva aproximación basada en similitudes de pendientes de las trayectorias, donde éstas se agrupan en función de dicha similitud independientemente de la distancia a la que se encuentren.
 
 Además se da la opción de combinar ambas clasificaciones de manera que el resultado final sería el de trayectorias agrupadas en base a sus valores y a sus evoluciones.
 
