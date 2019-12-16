@@ -110,7 +110,7 @@ time <- c(1,2,3,4)
 dF <- tscR::frechetDistC(dfx, time)
 ```
 
-* Frechet Distance
+* Fréchet Distance
 
 $$
 \begin{matrix}
@@ -284,7 +284,7 @@ plotCluster(df, sclust, c(1:2))
 
 Como puede observarse en este último gráfico, las trayectorias con evolución descedente-ascendente se han agrupado por un lado, independientemente de su distancia (plot izquierdo) y las de trayectoria ascendente-descentente por otro (plot derecho).
 
-## Based on Frechet distance
+## Based on Frçechet distance
 
 Es una medida de similitud entre curvas que tiene en cuenta la localización y orden de los puntos a lo
 largo de la curva (TODO: meter alguna referencia)
@@ -322,14 +322,26 @@ plotCluster(df, ccluster, "all")
 
 # Clustering large data
 
-En los casos en los que se dispone de una cantidad de trayectorias elevadas (>1000),
+<!--En los casos en los que se dispone de una cantidad de trayectorias elevadas (>1000),
 el coste computacional y de memoria puede ser muy elevado, principalmente cuando se trata de calcular las matrices de distancia. Nosotros proponemos hacer un clustering previo con la función `clara`, implementada dentro de `imputeSenators`, con un número de clusters elevado (p.e 100), esto generará 100 centroides, asumiendo que esos 100 centroides pueden representar al conjunto de formas de todas las trayectorias (de ahí el nombre de senators). Una vez obtenidos estos senators, se puede proceder con ellos como en el apartado anterior, agrupando en base distancia de Frechet, pendientes o ambas y generando el número de cluster deseados. Una vez obtenidos los clusters, como se ha guardado a que senator pertenecia cada trayectoria original, mediante `imputeSenatorToData` se asigna cada trayectoria
-a los clusters finales.
-Esta metodología permite clasificar un número muy elevado de trayectorias a un bajo coste computacional y de memoria.
+a los clusters finales.-->
 
-El procedimiento, sería el siguiente: 
+In cases where there are large amount of trajectories (> ~10000), computational cost in terms of
+CPU and RAM memory can be very high, specially when distance matrix is being computed.
+Here we proposed to perform a pre-clustering with `clara` function implemented within `imputeSenators`,
+with a high number $N$ of clusters (e.g. 100). This will generate $N$ (e.g. 100) centroids assuming
+that those centroids can represent the shapes of all trajectories. 
+Once the senator clusters are obtained, each original trajectory is assigned to the
+final cluster to which its senator has been assigned.
 
-En primer lugar obtener los senators
+<!--Esta metodología permite clasificar un número muy elevado de trayectorias a un bajo coste computacional y de memoria.-->
+This methology (inspired by senators of kmlShape package) makes it possible to classifya very high number of trajectories
+with a relatively low computational cost.
+
+<!-- El procedimiento, sería el siguiente: -->
+The method would be as follows
+
+First, the senators are obtained
 
 ```{r eval=T, echo=T}
 data( "tscR" )
@@ -337,41 +349,47 @@ bigDF <- tscR
 senators <- imputeSenators( bigDF, k = 100 )
 ```
 
-El objeto generado (`senators`) es una lista de 3 elementos
+<!-- El objeto generado (`senators`) es una lista de 3 elementos-->
+The created object (`senators`) is a list with 3 components.
 
-* $data: dataframe con los datos originales
-* $senatorData: es una matrix con las trajectorias de los senators
-* $senatorCluster: vector con los clusters de los senators
+* $data: Data frama with original data
+* $senatorData: Matrix with senators' trayectories
+* $senatorCluster: Vector with senators' clusters
 
-Como ejemplo clasificaremos en función de la distancia basada en pendientes,
+<!--Como ejemplo clasificaremos en función de la distancia basada en pendientes,
 aunque como se ha mencionado anteriormente se podría hacer en base cualquiera 
-de las distancias e incluso combinarlas.
+de las distancias e incluso combinarlas.-->
+As an example, will be classified using the distance based on slopes, 
+although as mentioned above could be done based on Fréchet and even combine both.
 
 ```{r}
 sdistSen <- frechetDistC( senators$senatorData, time = c( 1, 2, 3 ) ) 
 cSenators <- getClusters( sdistSen, k = 4 )
 ```
 
-Se podría visualizar la clasificación realizada a los senators
+<!-- Se podría visualizar la clasificación realizada a los senators-->
+It's possible view the classification made to senators
 
 ```{r}
 plotCluster(senators$senatorData, cSenators, "all")
 plotCluster(senators$senatorData, cSenators, c(1,2,3,4))
 ```
 
-Finalmente, hay que asignar los datos originales a los nuevos cluster
+<!--Finalmente, hay que asignar los datos originales a los nuevos cluster-->
+Finally, it's necesssary to assign original data to new clusters.
 
 ```{r}
 endCluster <- imputeSenatorToData(senators, cSenators)
 ```
 
-Esto crea un objeto de la clase imputeSenator con 3 slots
+<!--Esto crea un objeto de la clase imputeSenator con 3 slots-->
+This creates an object of imputeSenator class with 3 slots
 
-* @data: contiene el data frame con los datos originales
-* @senators: identifica cada dato de data a que senator pertenece
-* @endcluster: contiene los clusters finales a los que han sido asignados los datos
+* @data: Contains data.frame with original data.
+* @senators: Identifies each data into @data with senator it belong to.
+* @endcluster: Contains final clusters to which the data has been assigned.
 
-Y la visualización
+The result
 
 ```{r}
 plotClusterSenator(endCluster, "all")
