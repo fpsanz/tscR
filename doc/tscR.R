@@ -89,7 +89,7 @@ p2 <- df %>%
 ggplot( aes_(~Var1, ~Freq, group=~Var2, colour=~Var4) ) + 
   geom_line() +
   theme(legend.position = "none", plot.title = element_text(hjust = 0.5)) + 
-  xlab("(B)") + ylab("") + ggtitle(label = "Frechet based cluster")
+  xlab("(B)") + ylab("") + ggtitle(label = "Fréchet based cluster")
 
 p3 <- df %>%
   mutate(Var4 = recode(Var3, "C" = "A")) %>%

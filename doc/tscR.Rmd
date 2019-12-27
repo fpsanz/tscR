@@ -1,6 +1,6 @@
 ---
 title: "Clustering time series data with tscR"
-subtitle: "A R package to cluster time series data, base on slope and Frechet distance"
+subtitle: "A R package to cluster time series data, base on slope and Fréchet distance"
 author: 
 - Pérez-Sanz, Fernando. Murcian Institute of biomedical research 
 - Riquelme-Pérez, Miriam. CNRS - CEA, Univ. Paris-Saclay. MIRCen
@@ -38,18 +38,21 @@ library(TSdist)
 
 # Overview
 
-El clustering es una técnica de aprendizaje no supervisado, ampliamente empleado en diversas áreas tales como machine learning, bioinformatics, image analysis o pattern recognition. El clustering en gene expression data es útil para encontrar grupos de genes con comportamiento similar y puede proporcionar información muy útil para el entendimiento de determinados procesos biológicos.
+Clustering is an unsupervised learning technique widely used in several disciplines, such as machine learning, bioinformatics, image analysis or pattern recognition. Gene expression data clustering -- as well as in other omic disciplines -- is useful to find groups of genes with similar behavior and may provide very useful information for the understanding of certain biological processes.
 
-Este clustering de gene expression data puede realizarse sobre genes, muestras o sobre la variable tiempo. En este último caso, denominado time series genes expression, es posible identificar genes con similar dinámica y obtener conjuntos de respuestas ante determinadas situaciones. Esto ha permitido resaltar (insight) respuesta a stress ambiental, ritmos circadianos, respuesta a algún tratamiento, etc.
 
-Existen en R algunos paquetes genéricos para el análisis del clustering de series temporales -- _kmlShape_ , _dtwclust_, _clue_, _TSclust_ -- sin embargo, no hay un único algoritmo de clustering que resuelva satisfactoriamente todos los problemas. Cada problema de clustering requiere una aproximación específica. Existen paquetes orientados al análsis de time series gene expression como _TSMixclust_, _ctsGE_, _MFuzz_. _Mfuzz_ minimiza la alta sensibilidad al ruido de otros algoritmos mediante un fuzzy clustering, por su parte _TSmixClust_ es un soft-clustering que emplea mixed-effects models with nonparametric smoothing spline fitting. _ctsGE_ busca minimizar noisy data a traves de 2 pasos, primero se define grupos en base a sus perfiles de expresión (expression index) y posteriormente, los genes del mismo index son clustered aplicando kmeans. A pesar de que estos métodos buscan resolver la importante tarea de minimizar el efecto del ruido en el clustering, generalmente genes con similar expresión (en magnitud) terminan en los mismos grupos. 
+This clustering of gene expression data can be performed onto genes, samples or over the time variable. In the last case, called 'time series genes expression', it is possible to identify genes with similar conduct and obtain sets of responses to certain situations. This has allowed to highlight (insight) environmental stress response, circadian rhythms pathway, treatment response, etc
 
-En ocasiones, sin embargo, el mayor interés del investigador es encontrar genes con patrones similares (similares trayectorias) aunque estas ocurran a niveles de expresión diferentes. Se busca por tanto genes con una evolución temporal similar independientemente de la magnitud de la expresión.
 
-Supongamos que sometemos a un individuo a un tratamiento, y medimos la expresión de tres (o diez mil) de sus genes
-en el momento en que comenzamos a suministrarle el tratamiento, a la semana, a las dos semanas y a las 3 semanas (Fig. 1).
+Despite the fact that there are several generic R packages for the analysis of clustering time series -- _kmlShape_ , _dtwclust_, _clue_, _TSclust_ --, there is no a single algorithm that satisfactorily solves all problems and each clustering problem requires a specific approach. There are other specific packages to clustering time series in gene expression which seek minimize the high sensitivity to noise of other generic algorithms --  _TSMixclust_, _ctsGE_, _MFuzz_ -- . _MFuzz_ minimizes the high noise sensitivity of other algorithms through a fuzzy clustering, on the other hand _TSMixclust_ is a soft-clustering that uses mixed-effects models with non-parametric smoothing spline fitting. _ctsGE_ seeks to minimize noisy data in two steps, first define groups based on their expression profiles (expression index) and then, genes with same index are clustered by applying kmeans. Despite the fact that these methods attempt to solve the important task of minimizing the impact of the noise on clustering, genes with similar expression --in magnitude-- typically end up in the same groups, even though they have different temporal evolutions.
 
-Las lineas de la figura 1 (`a`,`b`,`c`) representan 3 trajectorias (p.e la expresión de 3 genes en 4 momentos diferentes). Las tayectorias $T_a$ y $T_c$ son idénticas desde el punto de vista de sus pendientes, solo difieren en la magnitud de si expresión. Por otro lado la trayectoria $T_b$ desde el punto de vista de la magnitud de expresión estaría más cerca de la trayectoria $T_a$ que de la $T_c$.
+
+Occasionally, however, the researcher's main interest lies in finding genes with similar patterns (similar trajectories) although these occur at different levels of expression. Therefore, genes with a similar temporal evolution are therefore sought regardless of their magnitude of expression. 
+
+
+Let us suppose that we subject an individual to a treatment and measure the expression of three (or ten thousand) of his genes at the time the treatment begins, at one week, two weeks and three weeks after (Fig. 1).
+
+The lines in figure 1 (`a`,`b`,`c`) represent 3 tracks (e.g. the expression of 3 genes at 4 different times). The trajectories $T_a$ and $T_c$ are identical in terms of slopes, they only differ in the magnitude of their expression. On the other hand the track $T_b$ would be closer to the track $T_a$ than to $T_c$.
 
 ```{r warning=F, fig.cap="Figure 1", echo=FALSE}
 a <- c(10, 15, 17, 25)
@@ -83,9 +86,9 @@ ggplot(df, aes(x=x))+
 
 ```
 
-Intuitivamente, si tuviésemos que decidir la distancia entre estas trayectorias, pensaríamos que $T_a$ está más cerca de $T_b$ que de $T_c$. A su vez, $T_c$ está más cerca de $T_b$ que de $T_a$. Se podrían cuantificar esas distancias con distintas métricas:
+Intuitively, if we had to determine the distance between these trajectories, we would think that $T_a$ is closer to $T_b$ than to $T_c$. In addition, $T_c$ is closer to $T_b$ than to $T_a$. You could quantify those distances with different metrics:
 
-* Distancia euclídea
+* Euclidean distance
 
 ```{r echo=FALSE}
 dfx <- as.matrix(rbind(a,b,c))
@@ -100,13 +103,15 @@ c & 54.00 & 39.41
 \end{matrix}
 $$
 
-Otras medidas de distancia basadas más específicamente en series temporales como las distancias de Frechet o DTW arrojan resultados similares:
+Other distance metrics based more specifically on time series such as Fréchet or DTW provide similar results:
 
 ```{r echo=FALSE}
 time <- c(1,2,3,4)
 dF <- tscR::frechetDistC(dfx, time)
 ```
-* Distancia de Frechet
+
+* Fréchet Distance
+
 $$
 \begin{matrix}
  & a &b \\ 
@@ -115,7 +120,7 @@ c & 29 & 24
 \end{matrix}
 $$
 
-* Distancia DTW
+* DTW Distance
 
 ```{r echo=FALSE}
 dt1 <- DTWDistance(a,b)
@@ -125,31 +130,30 @@ dt3 <- DTWDistance(b,c)
 
 $$
 \begin{matrix}
- & a &b \\ 
+ & a & b \\ 
 b & 42 & \\ 
 c & 158 & 104 
 \end{matrix}
 $$
 
-
-Sin embargo, si el interés es conocer qué trayectorias tienen similar comportamiento a lo largo del tiempo independientemente de la magnitud de su expresión, hay que recurrir a criterios puramente geométricos y buscar similitud basada es sus pendientes. En este caso la matriz de distancias quedaría de la siguiente manera:
+However, if the main interest is to determine which trajectories have similar behaviour over time regardless of the magnitude of their expression, it is necessary to use purely geometric criteria and look for similarities based on their slopes. In this case, the distance matrix would look as follows:
 
 $$
 \begin{matrix}
- & a &b \\ 
+ & a & b \\ 
 b & 6.71 & \\ 
 c & 0.00 & 6.71 
 \end{matrix}
 $$
-Donde se puede ver que la distancia entre la trayectoria $a$ y $c$ es cero pues son dos líneas con idénticas pendientes y la distancia de ambas a $b$ es la misma.
+Where it can be seen that the distance between the $a$ and $c$ trajectory is zero because these are two lines with identical slopes and the distance from both to $b$ is the same.
 
-Por tanto nos podemos encontrar que un investigador esté interesado en identificar y agrupar conjuntos de genes con comportamientos similares desde diferentes puntos de vista:
+Therefore, we might find a researcher interested in identifying and grouping sets of genes with similar behaviours according to different points of view:
 
-* Genes agrupados con niveles de expresión similares, es decir genes cuyas trayectorias estén próximas en términos de distancia física (fig.2 B).
+* Genes clustered with similar levels of expression, i.e. genes whose trajectories are close in terms of physical distance (fig.2 B).
 
-* Genes agrupados con similar evolución independientemente de la "distancia física" a la que se encuentren. Se Trata en este segundo caso de genes que responden de manera similar, pero con diferente intensidad (fig.2 C).
+* Genes grouped with similar evolution regardless of their physical distance. In this second scenario, we are dealing with genes that respond in a similar way, but with different intensity (fig.2 C).
 
-* Además podría ser de interés agrupar genes en función de ambos factores (distancia + tendencia) (fig.2 D).
+* It might also be interesting to group genes according to both factors (distance + tendency) (fig.2 D).
 
 ```{r echo=FALSE, fig.align='center', fig.cap="Figure 2"}
 
@@ -183,7 +187,7 @@ p2 <- df %>%
 ggplot( aes_(~Var1, ~Freq, group=~Var2, colour=~Var4) ) + 
   geom_line() +
   theme(legend.position = "none", plot.title = element_text(hjust = 0.5)) + 
-  xlab("(B)") + ylab("") + ggtitle(label = "Frechet based cluster")
+  xlab("(B)") + ylab("") + ggtitle(label = "Fréchet based cluster")
 
 p3 <- df %>%
   mutate(Var4 = recode(Var3, "C" = "A")) %>%
@@ -205,11 +209,11 @@ gridExtra::grid.arrange(p1,p2,p3,p4, nrow=2,
 
 ```
 
-Con este paquete proponemos una metodología que permite agrupar esas trayectorias basándonos en distancias físicas empleando métrica de distancia adaptada a series temporales (distancia de Frechet) y una nueva aproximación basada en similitudes de pendientes de las trayectorias, donde éstas se agrupan en función de dicha similitud independientemente de la distancia a la que se encuentren..
+Through this package we propose a methodology that allows to group these paths based on physical distances by using distance metrics adapted to time series (Fréchet's distance) and a new approach based on similarity of slopes between trajectories, where the trajectories are grouped according to this proximity regardless of the distance between them.
 
-Además se da la opción de combinar ambas clasificaciones de manera que el resultado final sería el de trayectorias agrupadas en base a sus valores y a sus evoluciones.
+Furthermore, a combination of both classifications is available, so that the final result would be trajectories grouped according to their values and their evolutions.
 
-Puesto que en gran cantidad de estudios (especialmente en diferentes disciplinas ómicas), el número de trayectorias puede ser muy grande (miles o decenas de miles), se ha desarrollado una metodología basada en la existente en el paquete _kmlShape_, en la que mediante un preagrupamiento, se obtiene una serie de "representantes" de las trayectorias, denominados senators, estos senators son entonces clasificados mediante alguno de los algoritmos propuestos. Finalmente el conjunto de trayectorias es asignado al cluster al que su senator ha sido asignado. De esta manera se reduce el coste computacional y el riesgo de desbordar la memoria.
+Since in many studies (especially in different comic disciplines), the number of trajectories can be very large (thousands or tens of thousands), a methodology has been developed based on the existing one in the _kmlShape_ package. By means of a pre-grouping, a series of "representatives" of the trajectories is obtained, called senators; these senators are then classified by means of some of the proposed algorithms.  At last, the set of trajectories is assigned to the cluster to which its senator has been assigned. In this way the computational cost and the risk of overflowing the memory is reduced.
 
 # Getting started
 
@@ -233,10 +237,9 @@ browseVignettes("tscR")
 
 ## Based on slope distance
 
-Los datos de entrada deben ser un dataframe o matrix donde las filas serán cada una de las trayectorias
-y las columnas los momentos en el tiempo (Table 1).
+The input data has to be a dataframe or matrix where the rows will be each of the trajectories and the columns the times (Table 1).
 
-En primer lugar vamos a cargar un conjunto de trayectorias de ejemplo incluidas en la librería
+Initially, we are going to load a set of example trajectories included in the library.
 
 ```{r eval = TRUE, echo = TRUE}
 data(tscR)
@@ -244,27 +247,27 @@ df <- tscR
 head(df)
 ```
 
-tscR contiene 300 observaciones (trayectorias) con datos tomados en 3 puntos temporales regulares (day 1, day 2, day 3).
+tscR includes 300 observations (trajectories) with data taken at 3 regular time-points (day 1, day 2, day 3).
 
 ```{r echo = F, eval=TRUE}
 matplot(t(df), type = "l", col = "gray30", lty = 1, ylab = "")
 ```
 
 
-A continuación se calcula la matrix de similitudes que será de tamaño n x n, siendo n el número de filas de la matriz de entrada. Esta matrix es un objeto de la clase `dist` y contiene las similitudes entre trayectorias basado en pendientes similares.
+Following this, the similarity matrix is calculated and its size will be n x n, where n represents the number of rows in the input matrix. This matrix is an object of ''dist'' class and contains the similarities between trajectories based on similar slopes.
 
 ```{r eval = TRUE, echo = TRUE}
 time <- c(1,2,3)
 sDist <- slopeDist(df, time)
 ```
 
-El siguiente paso sería agrupar las trayectorias basándonos en la similitud de sus pendientes independientemente de la distancia a la que se encuentren (meter referencia al paper).
+The next step would involve grouping the trajectories based on similarities in their slopes regardless of the distance between them *(meter referencia al paper)*.
 
 ```{r eval=TRUE}
 sclust <- getClusters(sDist, k = 3)
 ```
 
-El resultado puede ser visualizado con la función `plotCluster`. Esta función toma como parámetros los datos originales ( data ), el objeto resultante de `getClusters` ( cluster ) y los cluster que se desean visualizar: "all" para visulizarlos todos en un gráfico único, un entero para visulizar las trayectorias de ese cluster o un vector definiendo que clusters se desean visualizar (uno por subplot)
+The result may be displayed with the `plotCluster` function. This function assumes as parameters the original data (data), the object obtained from `getClusters` (clust) and the clusters to be displayed: "all" to display them all in a single graphic, an integer to display the trajectories of that cluster or a vector defining which clusters should be displayed (one per subplot).
 
 ```{r eval=T, echo=T}
 plotCluster(data = df, clust = sclust, ncluster = "all")
@@ -278,18 +281,17 @@ plotCluster(df, sclust, 1)
 plotCluster(df, sclust, c(1:2))
 ```
 
-Como puede observarse en este último gráfico, las trayectorias con evolución descedente-ascendente se han agrupado por un lado, independientemente de su distancia (plot izquierdo) y las de trayectoria ascendente-descentente por otro (plot derecho).
+As it can be appreciated in this last graph, the trajectories with descending - ascending evolution have been grouped on one side, independently of their distance (left plot) and those with ascending - descending evolution on the other side (right plot).
 
-## Based on Frechet distance
+## Based on Fréchet distance
 
-Es una medida de similitud entre curvas que tiene en cuenta la localización y orden de los puntos a lo
-largo de la curva (TODO: meter alguna referencia)
+This is a measure of similarity between curves that takes into account the location and order of the points along the curve (*TODO: meter alguna referencia*)
 
-El procedimiento sería similar al caso anterior:
+The procedure seems to be similar to the previous case:
 
-* Calcular la matriz de distancia.
-* Obtener los clusters.
-* Visualizar los resultados.
+* Calculate distance matrix.
+* Get the clusters.
+* Display the results.
 
 ```{r eval = TRUE, echo = TRUE}
 fdist <- frechetDistC(df, time)
@@ -297,17 +299,15 @@ fclust <- getClusters(fdist, 3)
 plotCluster(df, fclust, "all")
 ```
 
-Se observa que el agrupamiento tiene más que ver con la distancia (en términos euclídeos) entre trayectorias que con las pendientes en si mismas tal como se ilustra en el overview. En ciertas circustancias puede ser esta la clasificación que interese.
+Note that the clustering has more to do with the distance (in Euclidean terms) between trajectories rather than with the slopes themselves, as illustrated in the overview. In particular circumstances, this may be the classification of interest.
 
 ## Combined clusters
 
-Una tercera opción es combinar los resultados de ambos agrupamientos de manera que se obtendran
-conjuntos de trayectorias agrupados en función tanto de su distancia como de la similitud de sus pendientes.
+A third option would be to combine the results of both clusters in such a way that groups of trajectories would be obtained based on both distance and similarity of slopes.
 
-Para ello, la función `combineCluster` toma como entrada los objetos generados por getClusters generando
-una clasificación combinada.
+To this end, the `combineCluster` function takes as input the objects generated by getClusters, producing a combined classification.
 
-De esta manera trayectorias muy cercanas pero con pendientes diferentes serán clasificadas en grupos diferentes y trayectorias con pendientes similares pero alejadas también se claficicarán en grupos diferentes. Así se obtiene una clasificación más fina (precisa) de las trayectorias.
+Consequently, it is possible to classify very close tracks with different slopes into different groups, and tracks with similar slopes but farther away into different groups. This gives a more accurate classification of the trajectories.
 
 ```{r eval = TRUE, echo = TRUE}
 ccluster <- combineCluster(sclust, fclust)
@@ -318,14 +318,17 @@ plotCluster(df, ccluster, "all")
 
 # Clustering large data
 
-En los casos en los que se dispone de una cantidad de trayectorias elevadas (>1000),
-el coste computacional y de memoria puede ser muy elevado, principalmente cuando se trata de calcular las matrices de distancia. Nosotros proponemos hacer un clustering previo con la función `clara`, implementada dentro de `imputeSenators`, con un número de clusters elevado (p.e 100), esto generará 100 centroides, asumiendo que esos 100 centroides pueden representar al conjunto de formas de todas las trayectorias (de ahí el nombre de senators). Una vez obtenidos estos senators, se puede proceder con ellos como en el apartado anterior, agrupando en base distancia de Frechet, pendientes o ambas y generando el número de cluster deseados. Una vez obtenidos los clusters, como se ha guardado a que senator pertenecia cada trayectoria original, mediante `imputeSenatorToData` se asigna cada trayectoria
-a los clusters finales.
-Esta metodología permite clasificar un número muy elevado de trayectorias a un bajo coste computacional y de memoria.
+In cases where there are large amount of trajectories (> ~10000), computational cost in terms of CPU and RAM memory can be very high, especially when distance matrix is being computed.
 
-El procedimiento, sería el siguiente: 
+Here we proposed to perform a pre-clustering with `clara` function implemented within `imputeSenators`, with a high number $N$ of clusters (e.g. 100). This will generate $N$ (e.g. 100) centroids assuming that those centroids can represent the shapes of all trajectories. 
 
-En primer lugar obtener los senators
+Once the senator clusters are obtained, each original trajectory is assigned to the final cluster to which its senator has been assigned.
+
+This methodology (inspired by senators of _kmlShape_ package) makes it possible to classify a very high number of trajectories with a relatively low computational cost.
+
+The method would be as follows:
+
+First, the senators are obtained.
 
 ```{r eval=T, echo=T}
 data( "tscR" )
@@ -333,41 +336,40 @@ bigDF <- tscR
 senators <- imputeSenators( bigDF, k = 100 )
 ```
 
-El objeto generado (`senators`) es una lista de 3 elementos
+The created object (`senators`) is a list with 3 components.
 
-* $data: dataframe con los datos originales
-* $senatorData: es una matrix con las trajectorias de los senators
-* $senatorCluster: vector con los clusters de los senators
+* $data: Data frama with original data
+* $senatorData: Matrix with senators' trayectories
+* $senatorCluster: Vector with senators' clusters
 
-Como ejemplo clasificaremos en función de la distancia basada en pendientes,
-aunque como se ha mencionado anteriormente se podría hacer en base cualquiera 
-de las distancias e incluso combinarlas.
+As an example, the trajectories will be classified using the distance based on slopes, although as mentioned above it could be done either based on Fréchet's distance or even combining both.
 
 ```{r}
 sdistSen <- frechetDistC( senators$senatorData, time = c( 1, 2, 3 ) ) 
 cSenators <- getClusters( sdistSen, k = 4 )
 ```
 
-Se podría visualizar la clasificación realizada a los senators
+It is possible to observe the classification made to senators.
 
 ```{r}
 plotCluster(senators$senatorData, cSenators, "all")
 plotCluster(senators$senatorData, cSenators, c(1,2,3,4))
 ```
 
-Finalmente, hay que asignar los datos originales a los nuevos cluster
+Finally, it is necesssary to assign original data to new clusters.
 
 ```{r}
 endCluster <- imputeSenatorToData(senators, cSenators)
 ```
 
-Esto crea un objeto de la clase imputeSenator con 3 slots
 
-* @data: contiene el data frame con los datos originales
-* @senators: identifica cada dato de data a que senator pertenece
-* @endcluster: contiene los clusters finales a los que han sido asignados los datos
+This creates an object of imputeSenator class with 3 slots
 
-Y la visualización
+* @data: Contains data.frame with original data.
+* @senators: Identifies each data into @data with senator it belong to.
+* @endcluster: Contains final clusters to which the data has been assigned.
+
+The result:
 
 ```{r}
 plotClusterSenator(endCluster, "all")
