@@ -54,7 +54,7 @@ Let us suppose that we subject an individual to a treatment and measure the expr
 
 The lines in figure 1 (`a`,`b`,`c`) represent 3 tracks (e.g. the expression of 3 genes at 4 different times). The trajectories $T_a$ and $T_c$ are identical in terms of slopes, they only differ in the magnitude of their expression. On the other hand the track $T_b$ would be closer to the track $T_a$ than to $T_c$.
 
-```{r warning=F, fig.cap="Figure 1", echo=FALSE}
+```{r warning=F, fig.cap="Figure 1", echo=FALSE, fig.align='center'}
 a <- c(10, 15, 17, 25)
 b <- c(5, 8, 6, 9 )
 c <- c(-19, -14, -12, -4)
@@ -204,8 +204,7 @@ ggplot( aes_(~Var1, ~Freq, group=~Var2, colour=~Var3) ) +
   xlab("(D)") + ylab("") + ggtitle(label = "Combined clusters")
 
 
-gridExtra::grid.arrange(p1,p2,p3,p4, nrow=2,
-                        bottom = textGrob("Fig. 1",gp=gpar(fontsize=14,font=3)))
+gridExtra::grid.arrange(p1,p2,p3,p4, nrow=2)
 
 ```
 
