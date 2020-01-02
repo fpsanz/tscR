@@ -24,7 +24,7 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
-options(knitr.table.format = "html") 
+options(knitr.table.format = "html")
 ```
 
 ```{r setup, include=FALSE, comment=FALSE, echo=FALSE}
