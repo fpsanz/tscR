@@ -7,7 +7,8 @@
 imputeSenators(x, k = 100)
 }
 \arguments{
-\item{x}{Numeric matrix or data.frame with trajectory values. Rows are trajectories,
+\item{x}{Numeric matrix or data.frame with trajectory values. Rows are
+trajectories,
 columns are time or similar.}
 
 \item{k}{Numeric. Number of senators}
@@ -25,11 +26,16 @@ List with three slots:
 Compute clustering with clara function to obtain a number of 'senators'
 }
 \details{
-Calculates a series of senators representing a large set of trajectories that
- would otherwise be computationally very expensive. For it, by means of the \link{clara} function
-  of the cluster package a clustering is made obtaining the centroids as senators.
-   These centroids can then be clustered based on the slope distance or Frechet or both.
-    Finally, the data set will be assigned to the same cluster your senator is assigned to.
+Calculates a series of senators representing a large set of
+trajectories that
+ would otherwise be computationally very expensive. For it, by means of the
+ \link{clara} function
+  of the cluster package a clustering is made obtaining the centroids as
+  senators.
+   These centroids can then be clustered based on the slope distance or
+   Frechet or both.
+    Finally, the data set will be assigned to the same cluster your senator
+    is assigned to.
 }
 \examples{
 

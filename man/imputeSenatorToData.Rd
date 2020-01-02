@@ -9,7 +9,8 @@ imputeSenatorToData(senators, clusters)
 \arguments{
 \item{senators}{List object obtained from imputeSenator function}
 
-\item{clusters}{Pam object obtained from \link{getClusters} or \link{combineCluster}.}
+\item{clusters}{Pam object obtained from \link{getClusters} or
+\link{combineCluster}.}
 }
 \value{
 Object of \link{imputeSenator-class}.
@@ -18,10 +19,12 @@ Object of \link{imputeSenator-class}.
 Assign trajetories from the original data to senator clusters.
 }
 \details{
-When it's computed a clustering over senators, it's necessary to assign those cluster
-to original data. To do this, it's known which senator each original trajectory belong to, therefore
-the final cluster of each senator is identified and the trajectories of that senator
- are assigned to its definitive cluster.
+When it's computed a clustering over senators, it's necessary to
+ assign those cluster
+to original data. To do this, it's known which senator each original
+trajectory belong to, therefore the final cluster of each senator is
+ identified and the trajectories of that senator are assigned to its
+  definitive cluster.
 }
 \examples{
 

@@ -3,14 +3,17 @@
 #' Draw trajectories and are colored based on their clusters
 #'
 #' @param data Numeric data frame or matrix with de original data.
-#' @param clust Object of class pam or partition obtained from getClusters output.
-#' @param ncluster When nclust = 'all', plots all trajectories and cluster together in a single plot.
-#' If it's an integer, it draws only trajectories that belong to that cluster. Finally, if
-#' it is a numeric vector, it draws trajectories corresponding to each cluster within a subplot.
+#' @param clust Object of class pam or partition obtained from getClusters
+#'  output.
+#' @param ncluster When nclust = 'all', plots all trajectories and cluster
+#'  together in a single plot. If it's an integer, it draws only trajectories
+#'   that belong to that cluster. Finally, if it is a numeric vector, it draws
+#'   trajectories corresponding to each cluster within a subplot.
 #'
 #' @return Plot clustered trayectories
 #'
-#' @details It draws trajectories where x axis is time data and y axis trayectory values.
+#' @details It draws trajectories where x axis is time data and y axis
+#'  trayectory values.
 #'
 #' @examples
 #'

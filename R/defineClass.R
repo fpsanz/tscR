@@ -13,11 +13,6 @@
 ##' @author  Miriam Riquelme Pérez (\email{miriam.riquelmep@@gmail.com})
 ##' @seealso \code{\link{imputeSenators}}
 ##' @keywords classes
-setClass(
-  "imputeSenator",
-  slots = list(
-    data = "data.frame",
-    senators = "character",
-    endCluster = "character"
-  )
-)
+
+setClass("imputeSenator", slots = list(data = "data.frame",
+    senators = "character", endCluster = "character"))

@@ -12,7 +12,8 @@
 #'  that it be an object of the dist class and has dimensions nxn,
 #'  where n is equal to the number of trajectories.
 #'
-#' @return Object of class 'pam'. See \code{\link[cluster]{pam.object}} for details
+#' @return Object of class 'pam'. See \code{\link[cluster]{pam.object}}
+#'  for details
 #'
 #'
 #' @examples

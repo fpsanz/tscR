@@ -7,13 +7,15 @@
 slopeDist(x, time)
 }
 \arguments{
-\item{x}{Numeric matrix or data.frame with trajectory values. Rows are trajectories,
-columns are time or similar.}
+\item{x}{Numeric matrix or data.frame with trajectory values. Rows are
+trajectories, columns are time or similar.}
 
-\item{time}{Numeric vector with time data (time intervals), with equal length to columns number in x.}
+\item{time}{Numeric vector with time data (time intervals), with equal
+length to columns number in x.}
 }
 \value{
-A dist class object of size NxN, where N is rows number in the input data
+A dist class object of size NxN, where N is rows number
+ in the input data
 }
 \description{
 Compute pairwise distance based on slopes in a matrix of trajectories
@@ -28,7 +30,8 @@ dist_tscR <- slopeDist(data, time)
 
 }
 \seealso{
-\code{\link{frechetDistC} and \link{frechetDist} (R and slower versión than frechetDistC.)}
+\code{\link{frechetDistC} and \link{frechetDist} (R and slower
+ versión than frechetDistC.)}
 }
 \author{
 Fernando Pérez-Sanz (\email{fernando.perez8@um.es})

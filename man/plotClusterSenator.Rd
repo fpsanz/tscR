@@ -9,18 +9,21 @@ plotClusterSenator(x, ncluster)
 \arguments{
 \item{x}{imputesenator class object from \link{imputeSenatorToData} function.}
 
-\item{ncluster}{When nclust = 'all', plots all trajectories and cluster together in a single plot.
-If it's an integer, it draws only trajectories that belong to that cluster. Finally, if
-it is a numeric vector, it draws trajectories corresponding to each cluster within a subplot.}
+\item{ncluster}{When nclust = 'all', plots all trajectories and cluster
+together in a single plot. If it's an integer, it draws only trajectories
+ that belong to that cluster. Finally, if it is a numeric vector, it draws
+  trajectories corresponding to each cluster within a subplot.}
 }
 \value{
 Plot clustered trayectories
 }
 \description{
-Draw trajectories and are colored based on their clusters with imputesenator object
+Draw trajectories and are colored based on their clusters with imputesenator
+ object
 }
 \details{
-It draws trajectories where x axis is time data and y axis trayectory values.
+It draws trajectories where x axis is time data and y axis
+ trayectory values.
 }
 \examples{
 

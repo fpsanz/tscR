@@ -12,7 +12,8 @@ getClusters(x, k)
 \item{k}{Numeric. Number of clusters}
 }
 \value{
-Object of class 'pam'. See \code{\link[cluster]{pam.object}} for details
+Object of class 'pam'. See \code{\link[cluster]{pam.object}}
+ for details
 }
 \description{
 Compute clustering with pam function and a distance class object.

@@ -9,11 +9,13 @@ plotCluster(data, clust, ncluster)
 \arguments{
 \item{data}{Numeric data frame or matrix with de original data.}
 
-\item{clust}{Object of class pam or partition obtained from getClusters output.}
+\item{clust}{Object of class pam or partition obtained from getClusters
+output.}
 
-\item{ncluster}{When nclust = 'all', plots all trajectories and cluster together in a single plot.
-If it's an integer, it draws only trajectories that belong to that cluster. Finally, if
-it is a numeric vector, it draws trajectories corresponding to each cluster within a subplot.}
+\item{ncluster}{When nclust = 'all', plots all trajectories and cluster
+together in a single plot. If it's an integer, it draws only trajectories
+ that belong to that cluster. Finally, if it is a numeric vector, it draws
+ trajectories corresponding to each cluster within a subplot.}
 }
 \value{
 Plot clustered trayectories
@@ -22,7 +24,8 @@ Plot clustered trayectories
 Draw trajectories and are colored based on their clusters
 }
 \details{
-It draws trajectories where x axis is time data and y axis trayectory values.
+It draws trajectories where x axis is time data and y axis
+ trayectory values.
 }
 \examples{
 

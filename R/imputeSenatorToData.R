@@ -4,12 +4,15 @@
 #
 #'
 #' @param senators List object obtained from imputeSenator function
-#' @param clusters Pam object obtained from \link{getClusters} or \link{combineCluster}.
+#' @param clusters Pam object obtained from \link{getClusters} or
+#'  \link{combineCluster}.
 #'
-#' @details When it's computed a clustering over senators, it's necessary to assign those cluster
-#' to original data. To do this, it's known which senator each original trajectory belong to, therefore
-#' the final cluster of each senator is identified and the trajectories of that senator
-#'  are assigned to its definitive cluster.
+#' @details When it's computed a clustering over senators, it's necessary to
+#'  assign those cluster
+#' to original data. To do this, it's known which senator each original
+#' trajectory belong to, therefore the final cluster of each senator is
+#'  identified and the trajectories of that senator are assigned to its
+#'   definitive cluster.
 #'
 #' @return Object of \link{imputeSenator-class}.
 #'

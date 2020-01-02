@@ -1,15 +1,18 @@
 #' Plot trajectories based on clustering
 #'
-#' Draw trajectories and are colored based on their clusters with imputesenator object
+#' Draw trajectories and are colored based on their clusters with imputesenator
+#'  object
 #'
 #' @param x imputesenator class object from \link{imputeSenatorToData} function.
-#' @param ncluster When nclust = 'all', plots all trajectories and cluster together in a single plot.
-#' If it's an integer, it draws only trajectories that belong to that cluster. Finally, if
-#' it is a numeric vector, it draws trajectories corresponding to each cluster within a subplot.
+#' @param ncluster When nclust = 'all', plots all trajectories and cluster
+#'  together in a single plot. If it's an integer, it draws only trajectories
+#'   that belong to that cluster. Finally, if it is a numeric vector, it draws
+#'    trajectories corresponding to each cluster within a subplot.
 #'
 #' @return Plot clustered trayectories
 #'
-#' @details It draws trajectories where x axis is time data and y axis trayectory values.
+#' @details It draws trajectories where x axis is time data and y axis
+#'  trayectory values.
 #'
 #' @examples
 #'

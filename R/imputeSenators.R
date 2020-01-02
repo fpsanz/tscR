@@ -3,15 +3,21 @@
 #' Compute clustering with clara function to obtain a number of 'senators'
 #
 #'
-#' @param x Numeric matrix or data.frame with trajectory values. Rows are trajectories,
+#' @param x Numeric matrix or data.frame with trajectory values. Rows are
+#'  trajectories,
 #'  columns are time or similar.
 #' @param k Numeric. Number of senators
 #'
-#' @details Calculates a series of senators representing a large set of trajectories that
-#'  would otherwise be computationally very expensive. For it, by means of the \link{clara} function
-#'   of the cluster package a clustering is made obtaining the centroids as senators.
-#'    These centroids can then be clustered based on the slope distance or Frechet or both.
-#'     Finally, the data set will be assigned to the same cluster your senator is assigned to.
+#' @details Calculates a series of senators representing a large set of
+#' trajectories that
+#'  would otherwise be computationally very expensive. For it, by means of the
+#'  \link{clara} function
+#'   of the cluster package a clustering is made obtaining the centroids as
+#'   senators.
+#'    These centroids can then be clustered based on the slope distance or
+#'    Frechet or both.
+#'     Finally, the data set will be assigned to the same cluster your senator
+#'     is assigned to.
 #'
 #' @return List with three slots:
 #'
@@ -42,7 +48,8 @@ imputeSenators <- function(x, k = 100) {
         cat(paste("Setting k to", k, ". 10% of total data"))
     }
     if (k > 100) {
-        warning("K higher than 100 has severe computacional cost. Setting k to 100.")
+        warning("K higher than 100 has severe computacional cost.
+                Setting k to 100.")
         k = 100
     }
     result <- clara(x, k)
