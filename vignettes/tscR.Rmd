@@ -24,6 +24,7 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+options(knitr.table.format = "html") 
 ```
 
 ```{r setup, include=FALSE, comment=FALSE, echo=FALSE}
@@ -240,10 +241,10 @@ The input data has to be a dataframe or matrix where the rows will be each of th
 
 Initially, we are going to load a set of example trajectories included in the library.
 
-```{r eval = TRUE, echo = TRUE}
+```{r eval = TRUE, echo = TRUE, results='asis'}
 data(tscR)
 df <- tscR
-knitr::kable(head(round(df,3)), caption = "Table 1", align = c("c","c","c"))
+knitr::kable(head(round(df,3)), caption = "Table 1", align = c('c', 'c', 'c'))
 ```
 
 tscR includes 300 observations (trajectories) with data taken at 3 regular time-points (day 1, day 2, day 3).
