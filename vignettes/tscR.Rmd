@@ -243,7 +243,7 @@ Initially, we are going to load a set of example trajectories included in the li
 ```{r eval = TRUE, echo = TRUE}
 data(tscR)
 df <- tscR
-head(df)
+knitr::kable(head(round(df,3)), caption = "Table 1", align = c("c","c","c"))
 ```
 
 tscR includes 300 observations (trajectories) with data taken at 3 regular time-points (day 1, day 2, day 3).
@@ -376,6 +376,13 @@ plotClusterSenator(endCluster, c(1,2,3,4))
 ```
 
 
+# Session info
+
+```{r}
+sessionInfo()
+```
+
+
 # References
 
 Abanda, A. et  al. (2019).  A review on distance based time series classification. Data Mining and Knowledge Discovery,
@@ -408,4 +415,6 @@ Sardá-Espinosa, A.(2019). Time-Series Clustering in R Using the dtwclust Packag
 Sharabi-Schwager, M. and Ophir, R. (2019). ctsGE: Clustering of Time Series Gene Expression data. 
 
 Toohey, K. (2015). SimilarityMeasures: Trajectory Similari ty Measures
+
+
 

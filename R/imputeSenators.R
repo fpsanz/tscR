@@ -39,10 +39,10 @@
 imputeSenators <- function(x, k = 100) {
     if (0.1 * nrow(x) < k) {
         k = 0.1 * nrow(x)
-        cat(paste("Setting k to", k, ". 10% total of data"))
+        cat(paste("Setting k to", k, ". 10% of total data"))
     }
     if (k > 100) {
-        warning("K higher 100 has severe computacional cost. Setting k to 100.")
+        warning("K higher than 100 has severe computacional cost. Setting k to 100.")
         k = 100
     }
     result <- clara(x, k)
