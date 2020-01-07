@@ -3,5 +3,6 @@
 .RData
 .Ruserdata
 tscR.Rproj
+.Rproj.user/
 doc
 Meta
