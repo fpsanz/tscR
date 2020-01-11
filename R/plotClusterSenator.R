@@ -32,7 +32,7 @@ plotClusterSenator <- function(x, ncluster) {
     }
     if (length(ncluster) == 1 && ncluster == "all") {
         clusteres <- as.numeric(gsub("end", "", x@endCluster))
-        colors <- tscR:::fcolor(clusteres)
+        colors <- with(asNamespace("tscR"), fcolor(clusteres))
         matplot(t(x@data), lty = 1, type = "l", col = colors,
             ylab = "Trajectories", xlab = "Time")
     }

@@ -42,7 +42,7 @@ plotCluster <- function(data, clust, ncluster, ...) {
         data <- importFromSE(data, ...)
     }
     if (length(ncluster) == 1 && ncluster == "all") {
-        colors <- tscR:::fcolor(clust$clustering)
+        colors <- with(asNamespace("tscR"), fcolor(clust$clustering))
         matplot(
             t(data),
             lty = 1,
