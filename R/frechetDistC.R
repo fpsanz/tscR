@@ -42,7 +42,7 @@
 
 
 frechetDistC <- function(x, time, ...){
-    if(is(df, "SummarizedExperiment")){
+    if(is(x, "SummarizedExperiment")){
         x <- importFromSE(x, ...)
     }
     if (dim(x)[1] > 1000)

@@ -38,7 +38,7 @@
 
 
 plotCluster <- function(data, clust, ncluster, ...) {
-    if(is(df, "SummarizedExperiment")){
+    if(is(data, "SummarizedExperiment")){
         data <- importFromSE(data, ...)
     }
     if (length(ncluster) == 1 && ncluster == "all") {

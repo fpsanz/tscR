@@ -31,8 +31,8 @@
 #' @author  Miriam Riquelme Pérez (\email{miriam.riquelmep@@gmail.com})
 
 
-slopeDist <- function(x, time) {
-    if(is(df, "SummarizedExperiment")){
+slopeDist <- function(x, time, ...) {
+    if(is(x, "SummarizedExperiment")){
         x <- importFromSE(x, ...)
     }
     if (dim(x)[1] > 1000) {

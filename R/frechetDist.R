@@ -40,7 +40,7 @@
 frechetDist <- function(x, time, ...) {
   warning("This function is slower than frechetDistC.")
   warning("You should use C version")
-  if(is(df, "SummarizedExperiment")){
+  if(is(x, "SummarizedExperiment")){
         x <- importFromSE(x, ...)
     }
   if (dim(x)[1] > 1000) {

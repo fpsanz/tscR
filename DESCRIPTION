@@ -7,7 +7,10 @@ Author: Miriam Riquelme-Pérez and Fernando Pérez-Sanz
 Maintainer: Pérez-Sanz, Fernando <fernando.perez8@um.es>
 License: GPL (>=2)
 Depends: R (>= 3.6), dplyr
-Imports: gridExtra, methods, TSdist, class, kmlShape, graphics, cluster, RColorBrewer, grDevices, knitr, rmarkdown, prettydoc, grid, ggplot2, latex2exp, stats, SummarizedExperiment
+Imports: gridExtra, methods, TSdist, class, kmlShape, graphics, cluster,
+        RColorBrewer, grDevices, knitr, rmarkdown, prettydoc, grid, ggplot2,
+        latex2exp, stats, SummarizedExperiment, GenomicRanges, IRanges,
+        S4Vectors
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.0.2

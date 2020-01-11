@@ -4,7 +4,7 @@
 \alias{slopeDist}
 \title{Pairwise slope distance}
 \usage{
-slopeDist(x, time)
+slopeDist(x, time, ...)
 }
 \arguments{
 \item{x}{Numeric matrix or data.frame with trajectory values. Rows are

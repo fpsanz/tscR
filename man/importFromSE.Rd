@@ -43,14 +43,14 @@ nrows <- 200
 ncols <- 6
 time1 <- matrix(runif(nrows * ncols, 1, 1e4), nrows)
 time2 <- matrix(runif(nrows * ncols, 1, 1e4), nrows)
-rowRanges <- GRanges(rep(c("chr1", "chr2"), c(50, 150)),
-                     IRanges(floor(runif(200, 1e5, 1e6)), width=100),
+rowRanges <- GenomicRanges::GRanges(rep(c("chr1", "chr2"), c(50, 150)),
+                     IRanges::IRanges(floor(runif(200, 1e5, 1e6)), width=100),
                                           strand=sample(c("+", "-"), 200, TRUE),
                                           feature_id=sprintf("ID\%03d", 1:200))
-colData <- DataFrame(Treatment=rep(c("ChIP", "Input"), 3),
+colData <- S4Vectors::DataFrame(Treatment=rep(c("ChIP", "Input"), 3),
                       Samples = LETTERS[1:6],
                       row.names=LETTERS[1:6])
-se <- SummarizedExperiment(assays=list(time1=time1, time2=time2),
+se <- SummarizedExperiment::SummarizedExperiment(assays=list(time1=time1, time2=time2),
                       rowRanges=rowRanges, colData=colData)
 
 # Get sample "A" with all times
@@ -66,15 +66,15 @@ nrows <- 200
 ncols <- 6
 sampleA <- matrix(runif(nrows * ncols, 1, 1e4), nrows)
 sampleB <- matrix(runif(nrows * ncols, 1, 1e4), nrows)
-rowRanges <- GRanges(rep(c("chr1", "chr2"), c(50, 150)),
-                     IRanges(floor(runif(200, 1e5, 1e6)), width=100),
+rowRanges <- GenomicRanges::GRanges(rep(c("chr1", "chr2"), c(50, 150)),
+                     IRanges::IRanges(floor(runif(200, 1e5, 1e6)), width=100),
                                           strand=sample(c("+", "-"), 200, TRUE),
                                           feature_id=sprintf("ID\%03d", 1:200))
- colData <- DataFrame(Time=paste("time",seq(1:6), sep=""),
+ colData <- S4Vectors::DataFrame(Time=paste("time",seq(1:6), sep=""),
                       sampleA = rep("A",6),
                       sampleB = rep("B", 6),
                       row.names = paste("time",seq(1:6), sep=""))
-se <- SummarizedExperiment(assays=list(sampleA=sampleA, sampleB=sampleB),
+se <- SummarizedExperiment::SummarizedExperiment(assays=list(sampleA=sampleA, sampleB=sampleB),
                       rowRanges=rowRanges, colData=colData)
 # Get sample "sampleA" with all times
 

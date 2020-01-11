@@ -29,7 +29,7 @@ options(knitr.table.format = "html")
 
 ```{r setup, include=FALSE, comment=FALSE, echo=FALSE}
 library(tscR)
-library(tidyverse)
+library(dplyr)
 library(grid)
 library(ggplot2)
 library(latex2exp)

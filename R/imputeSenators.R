@@ -47,7 +47,7 @@
 #' @author  Miriam Riquelme-Pérez (\email{miriam.riquelmep@@gmail.com})
 
 imputeSenators <- function(x, k = 100, ...) {
-    if(is(df, "SummarizedExperiment")){
+    if(is(x, "SummarizedExperiment")){
         x <- importFromSE(x, ...)
     }
     if (0.1 * nrow(x) < k) {
