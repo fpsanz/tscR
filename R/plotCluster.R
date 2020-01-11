@@ -3,12 +3,17 @@
 #' Draw trajectories and are colored based on their clusters
 #'
 #' @param data Numeric data frame or matrix with de original data.
+#' SummarizedExperiment object can be provided for compatibility with
+#'  bioconductor container (for more information see vignette).
+#'
 #' @param clust Object of class pam or partition obtained from getClusters
 #'  output.
 #' @param ncluster When nclust = 'all', plots all trajectories and cluster
 #'  together in a single plot. If it's an integer, it draws only trajectories
 #'   that belong to that cluster. Finally, if it is a numeric vector, it draws
 #'   trajectories corresponding to each cluster within a subplot.
+#' @param ... Other arguments to pass to importFromSE if _x_
+#' is SummarizedExperiment-class.
 #'
 #' @return Plot clustered trayectories
 #'
@@ -25,13 +30,17 @@
 #' plotCluster(data, fclust, 'all')
 #'
 #'
-#' @seealso \code{\link[graphics]{matplot}, \link{plotClusterSenator}}.
+#' @seealso \code{\link[graphics]{matplot}, \link{plotClusterSenator},
+#'  \link{importFromSE}.}
 #'
 #' @author  Fernando Pérez-Sanz (\email{fernando.perez8@@um.es})
 #' @author  Miriam Riquelme-Pérez (\email{miriam.riquelmep@@gmail.com})
 
 
-plotCluster <- function(data, clust, ncluster) {
+plotCluster <- function(data, clust, ncluster, ...) {
+    if(is(df, "SummarizedExperiment")){
+        data <- importFromSE(data, ...)
+    }
     if (length(ncluster) == 1 && ncluster == "all") {
         colors <- tscR:::fcolor(clust$clustering)
         matplot(

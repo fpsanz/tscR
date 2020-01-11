@@ -4,9 +4,13 @@
 #'
 #'
 #' @param x Numeric matrix or data.frame with trajectory values. Rows are
-#'  trajectories, columns are time or similar.
+#'  trajectories, columns are time or similar. SummarizedExperiment
+#'  object can be provided for compatibility with bioconductor container (for
+#'  more information see vignette).
 #' @param time Numeric vector with time data (time intervals), with equal
 #'  length to columns number in x.
+#' @param ... Other arguments to pass to importFromSE if _x_
+#' is SummarizedExperiment-class.
 #'
 #' @return A dist class object of size NxN, where N is rows number
 #'  in the input data
@@ -21,13 +25,16 @@
 #'
 #'
 #' @seealso \code{\link{frechetDistC} and \link{frechetDist} (R and slower
-#'  versión than frechetDistC.)}
+#'  versión than frechetDistC.), \link{importFromSE}.}
 #'
 #' @author  Fernando Pérez-Sanz (\email{fernando.perez8@@um.es})
 #' @author  Miriam Riquelme Pérez (\email{miriam.riquelmep@@gmail.com})
 
 
 slopeDist <- function(x, time) {
+    if(is(df, "SummarizedExperiment")){
+        x <- importFromSE(x, ...)
+    }
     if (dim(x)[1] > 1000) {
         warning(
             "Large matrix or data.frame could cause memory problems.

@@ -4,9 +4,12 @@
 #
 #'
 #' @param x Numeric matrix or data.frame with trajectory values. Rows are
-#'  trajectories,
-#'  columns are time or similar.
+#'  trajectories, columns are time or similar. SummarizedExperiment
+#'  object can be provided for compatibility with bioconductor container
+#'   (for more information see vignette).
 #' @param k Numeric. Number of senators
+#' @param ... Other arguments to pass to importFromSE if _x_
+#' is SummarizedExperiment-class.
 #'
 #' @details Calculates a series of senators representing a large set of
 #' trajectories that
@@ -37,12 +40,16 @@
 #' sClust <- getClusters( senatorDist, k = 5 )
 #' plotCluster( senators$senatorData, sClust, 2 )
 #'
-#' @seealso \code{\link{plotClusterSenator}, \link{imputeSenatorToData}.}
+#' @seealso \code{\link{plotClusterSenator}, \link{imputeSenatorToData},
+#'  \link{importFromSE}.}
 #'
 #' @author  Fernando Pérez-Sanz (\email{fernando.perez8@@um.es})
 #' @author  Miriam Riquelme-Pérez (\email{miriam.riquelmep@@gmail.com})
 
-imputeSenators <- function(x, k = 100) {
+imputeSenators <- function(x, k = 100, ...) {
+    if(is(df, "SummarizedExperiment")){
+        x <- importFromSE(x, ...)
+    }
     if (0.1 * nrow(x) < k) {
         k = 0.1 * nrow(x)
         cat(paste("Setting k to", k, ". 10% of total data"))

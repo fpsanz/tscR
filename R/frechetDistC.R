@@ -3,12 +3,14 @@
 #' Compute pairwise Frechet distance in a matrix of trajectories.
 #'  This function is a C implementation and
 #' a lot faster version than frechetDist
-#'
 #' @param x Numeric matrix or data.frame with trajectory values.
-#' Rows are trajectories,
-#'  columns are time or similar.
+#' Rows are trajectories, columns are time or similar. SummarizedExperiment
+#'  object can be provided for compatibility with bioconductor container (for
+#'  more information see vignette).
 #' @param time Numeric vector with time data (time intervals),
 #'  with equal length to columns number in x.
+#' @param ... Other arguments to pass to importFromSE if _x_
+#' is SummarizedExperiment-class.
 #'
 #' @details This function is a C adaptation of the distFrechet
 #'  code from
@@ -33,14 +35,16 @@
 #'
 #' @seealso \code{\link[kmlShape]{distFrechet} (package kmlShape),
 #'  \link{slopeDist}, \link{frechetDist} (R and slower versión than
-#'   frechetDistC).}
+#'   frechetDistC), \link{importFromSE}.}
 #'
 #' @author  Fernando Pérez-Sanz (\email{fernando.perez8@@um.es})
 #' @author  Miriam Riquelme-Pérez (\email{miriam.riquelmep@@gmail.com})
 
 
-frechetDistC <- function(x, time)
-{
+frechetDistC <- function(x, time, ...){
+    if(is(df, "SummarizedExperiment")){
+        x <- importFromSE(x, ...)
+    }
     if (dim(x)[1] > 1000)
     {
         warning("Large matrix or data.frame could cause memory problems.
