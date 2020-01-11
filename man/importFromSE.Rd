@@ -25,7 +25,9 @@ Import a summarizedExperiment object containing expression data at
 }
 \details{
 This function enables the integration of an object of the
-summarizedExpmeriment class. There are two possible organization options in
+summarizedExpmeriment class and is integrated into all other functions,
+so there is no need to run it in an isolated way.
+There are two possible organization options in
 the slot assays. A) each row is a gene each column,
 is a sample and each matrix is a time. In this case SE_byTime=FALSE. B)
 each row is a gene , each column is a time and each

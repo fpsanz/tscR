@@ -4,10 +4,12 @@
 \alias{plotCluster}
 \title{Plot trajectories based on clustering}
 \usage{
-plotCluster(data, clust, ncluster)
+plotCluster(data, clust, ncluster, ...)
 }
 \arguments{
-\item{data}{Numeric data frame or matrix with de original data.}
+\item{data}{Numeric data frame or matrix with de original data.
+SummarizedExperiment object can be provided for compatibility with
+ bioconductor container (for more information see vignette).}
 
 \item{clust}{Object of class pam or partition obtained from getClusters
 output.}
@@ -16,6 +18,9 @@ output.}
 together in a single plot. If it's an integer, it draws only trajectories
  that belong to that cluster. Finally, if it is a numeric vector, it draws
  trajectories corresponding to each cluster within a subplot.}
+
+\item{...}{Other arguments to pass to importFromSE if _x_
+is SummarizedExperiment-class.}
 }
 \value{
 Plot clustered trayectories
@@ -39,7 +44,8 @@ plotCluster(data, fclust, 'all')
 
 }
 \seealso{
-\code{\link[graphics]{matplot}, \link{plotClusterSenator}}.
+\code{\link[graphics]{matplot}, \link{plotClusterSenator},
+ \link{importFromSE}.}
 }
 \author{
 Fernando Pérez-Sanz (\email{fernando.perez8@um.es})

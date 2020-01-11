@@ -4,14 +4,18 @@
 \alias{imputeSenators}
 \title{Preclustering function for large data}
 \usage{
-imputeSenators(x, k = 100)
+imputeSenators(x, k = 100, ...)
 }
 \arguments{
 \item{x}{Numeric matrix or data.frame with trajectory values. Rows are
-trajectories,
-columns are time or similar.}
+trajectories, columns are time or similar. SummarizedExperiment
+object can be provided for compatibility with bioconductor container
+ (for more information see vignette).}
 
 \item{k}{Numeric. Number of senators}
+
+\item{...}{Other arguments to pass to importFromSE if _x_
+is SummarizedExperiment-class.}
 }
 \value{
 List with three slots:
@@ -49,7 +53,8 @@ plotCluster( senators$senatorData, sClust, 2 )
 
 }
 \seealso{
-\code{\link{plotClusterSenator}, \link{imputeSenatorToData}.}
+\code{\link{plotClusterSenator}, \link{imputeSenatorToData},
+ \link{importFromSE}.}
 }
 \author{
 Fernando Pérez-Sanz (\email{fernando.perez8@um.es})

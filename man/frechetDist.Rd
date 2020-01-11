@@ -4,14 +4,19 @@
 \alias{frechetDist}
 \title{Pairwise Frechet distance}
 \usage{
-frechetDist(x, time)
+frechetDist(x, time, ...)
 }
 \arguments{
 \item{x}{Numeric matrix or data.frame with trajectory values.
-Rows are trajectories, columns are time or similar.}
+Rows are trajectories, columns are time or similar. SummarizedExperiment
+object can be provided for compatibility with bioconductor container (for
+more information see vignette).}
 
 \item{time}{Numeric vector with time data (time intervals),
 with equal length to columns number in x.}
+
+\item{...}{Other arguments to pass to importFromSE if _x_
+is SummarizedExperiment-class.}
 }
 \value{
 A dist class object of size NxN, where N is rows number
@@ -38,7 +43,7 @@ dist_tscR <- frechetDist(data, time)
 \seealso{
 \code{\link[kmlShape]{distFrechet} (package kmlShape),
  \link{slopeDist}, \link{frechetDistC}
-  (C and faster versión than frechetDist).}
+  (C and faster versión than frechetDist), \link{importFromSE}.}
 }
 \author{
 Fernando Pérez-Sanz (\email{fernando.perez8@um.es})
