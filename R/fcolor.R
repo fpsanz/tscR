@@ -1,4 +1,5 @@
-
+#' @noRd
+#'
 fcolor <- function(x) {
     f <- colorRamp(brewer.pal(11, "Spectral"))
     rr <- range(x)
