@@ -6,7 +6,7 @@ Description: Clustering for time series data using slope distance and/or shape d
 Author: Miriam Riquelme-Pérez and Fernando Pérez-Sanz
 Maintainer: Pérez-Sanz, Fernando <fernando.perez8@um.es>
 License: GPL (>=2)
-Depends: R (>= 3.6), dplyr
+Depends: R (>= 4.0), dplyr
 Imports: gridExtra, methods, TSdist, class, kmlShape, graphics, cluster,
         RColorBrewer, grDevices, knitr, rmarkdown, prettydoc, grid, ggplot2,
         latex2exp, stats, SummarizedExperiment, GenomicRanges, IRanges,
