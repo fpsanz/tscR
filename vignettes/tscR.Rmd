@@ -376,6 +376,43 @@ plotClusterSenator(endCluster, "all")
 plotClusterSenator(endCluster, c(1,2,3,4))
 ```
 
+# Integration with SummarizedExperiment
+
+The SummarizedExperiment container includes one or more tests, each represented by a
+matrix type object in a quantitative or non- quantitative way. Among all the elements
+in this object, the one that contains the more relevant data to our study is the assay
+slot, which is composed of a list of data frames. The rows in every data frame usually
+represent a genomic interesting range (genes, probes, etc) and the columns might represent
+the samples, individuals, time and so on.
+
+To provide an easier usage of this sort of objects directly with tscR, because the assay
+slot may be quite complex and replete with data, we have implemented the `importFromSE()`
+function. This function is integrated within the rest of the functions of the package
+as well. Thus, it is not necessary to invoke it ad-hoc; but for a greater control it can
+be called to obtain the individual matrix corresponding to a sample, where the rows
+correspond to a genomic range and the columns will be different times. Exactly as
+downtream analysis functions would expect.
+
+There are two possible arrangements of temporal data within SummarizedExperiment (Fig. 3):
+
+```{r echo=FALSE, out.width='100%', fig.cap="Figure 3", fig.align='center'}
+knitr::include_graphics('./tscR.svg')
+```
+
+
+1. `SE_byTime = TRUE`: if each matrix in the assays slot corresponds to a sample or
+individual and each column is a time. In this scenario, the extraction of the matrix is
+direct because it is what the tscR function requires. Here the argument _sample_ refers to
+the name of the matrix `assays(se) [[col]]` or the matrix number `assay(se, i=col)` in the
+slot assays.
+
+2. `SE_byTime = FALSE`: if each matrix in the assays slot corresponds to a certain time
+and each column to a particular sample --- this is the most common situation ---.
+In this case, in order to obtain a matrix of a single sample with all its times, as the
+program expects, the corresponding column of time must be extracted from each matrix and
+assembled into a new matrix (Fig 3.B). With this, the argument _sample_ refers to the
+sample name (column name) or the column number corresponding to that sample
+`lapply(assays(se), function(se) se[, col])`.
 
 # Session info
 
@@ -406,6 +443,8 @@ Maechler, M. et  al. (2019). cluster: Cluster Analysis Basics and Extensions.
 McDowell, I. C. et al. (2018). Clustering gene expression time series data using an infinite Gaussian process mixture model.PLoS Computational Biology, 14 (1), e1005896.
 
 Montero, P. and Vilar, J. A. (2014). TSclust: An R package for time series clustering. Journal of Statistical Software, 62 (1), 1–43.
+
+Morgan M, Obenchain V, Hester J, Pagès H (2019). SummarizedExperiment: SummarizedExperiment container. R package version 1.16.1. 
 
 Oyelade, J. et al. (2016). Clustering algorithms: Their application to gene expression data. Bioinformatics and Biology Insights, 10, 237–253. 
 
