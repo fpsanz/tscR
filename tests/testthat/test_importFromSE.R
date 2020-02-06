@@ -16,6 +16,4 @@ test_that("Input data is a summarizedExperiment object", {
                       rowRanges=rowRanges, colData=colData)
     expect_error( importFromSE(c(1,2,3), sample = "A"),
                   "Function applicable only to 'SummarizedExperiment' objects")
-    impSE <- importFromSE(se, sample=1, SE_byTime = TRUE)
-    expect_match(class(impSE), "data.frame|matrix")
 })

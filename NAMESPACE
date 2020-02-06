@@ -1,4 +1,4 @@
-useDynLib(tscR)
+useDynLib(tscR, .registration=TRUE)
 export("frechetDist",
     "combineCluster","frechetDistC","getClusters",
     "imputeSenators","imputeSenatorToData","plotCluster",
