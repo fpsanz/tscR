@@ -77,7 +77,7 @@
 
 importFromSE <- function(se, sample, SE_byTime = FALSE) {
     if(!is(se, "SummarizedExperiment")){
-        stop("Function applicable only to 'SummarizedExperiment' objects ")
+        stop("Function applicable only to 'SummarizedExperiment' objects")
     }
   if (is.null(sample)) {
     stop("Either sample name or sample number must be provided")

@@ -35,7 +35,12 @@
 #' @author  Miriam Riquelme-Pérez (\email{miriam.riquelmep@@gmail.com})
 
 imputeSenatorToData <- function(senators, clusters) {
-    # require(tidyverse)
+    if( length(senators)!=3 | !is.list(senators)){
+        stop("Senators must be a list provided by imputeSenators")
+    }
+    if( !is(clusters, "pam")) {
+        stop("clusters must be a pam object provided by getClusters")
+    }
     data <- senators$data
     data <- data %>% mutate_at(vars(senators), as.character)
     senData <- senators$senatorData
