@@ -15,3 +15,5 @@ Encoding: UTF-8
 RoxygenNote: 7.0.2
 VignetteBuilder: knitr
 biocViews: GeneExpression, Clustering, DNAMethylation, Microarray
+Suggests: 
+    testthat
