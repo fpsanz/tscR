@@ -217,7 +217,15 @@ Since in many studies (especially in different comic disciplines), the number of
 
 # Getting started
 
-Install with `install_github`.
+Install from Bioconductor
+
+```{r eval=FALSE, echo=TRUE}
+if (!requireNamespace("BiocManager"))
+install.packages("BiocManager")
+BiocManager::install("tscR")
+```
+
+Install the latest development version in `install_github`.
 
 ```{r eval = FALSE, echo=TRUE}
 devtools::install_github("fpsanz/tscR")
@@ -243,10 +251,10 @@ Initially, we are going to load a set of example trajectories included in the li
 
 ```{r eval = TRUE, echo = TRUE, results='asis'}
 data(tscR)
+df <- tscR
 ```
 
 ```{r eval=TRUE, echo=FALSE, results='asis'}
-df <- tscR
 knitr::kable(head(round(df,3)), 
              caption = "Table 1. First six rows from the example data matrix at three different times that have been studied for one sample.",
              align = c('c', 'c', 'c'), format="html") %>%
@@ -269,7 +277,7 @@ sDist <- slopeDist(df, time)
 
 The next step would involve grouping the trajectories based on similarities in their slopes regardless of the distance between them *(meter referencia al paper)*.
 
-```{r eval=TRUE}
+```{r eval=TRUE, echo=TRUE}
 sclust <- getClusters(sDist, k = 3)
 ```
 

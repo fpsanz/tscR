@@ -12,7 +12,6 @@ Imports: gridExtra, methods, TSdist, class, kmlShape, graphics, cluster,
         latex2exp, stats, SummarizedExperiment, GenomicRanges, IRanges,
         S4Vectors
 Encoding: UTF-8
-LazyData: true
 RoxygenNote: 7.0.2
 VignetteBuilder: knitr
 biocViews: GeneExpression, Clustering, DNAMethylation, Microarray
