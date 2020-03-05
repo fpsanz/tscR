@@ -34,7 +34,7 @@ combineCluster <- function(x, y)
 {
     if (!inherits(x, "pam") | !inherits(x, "pam"))
     {
-        stop("X and Y must be pam objects")
+        stop("x and y must be pam objects")
     }
     uclust <- as.data.frame(cbind(c(seq_len(length(x$clustering))),
         x$clustering, y$clustering))

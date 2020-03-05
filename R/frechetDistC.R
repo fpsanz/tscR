@@ -50,16 +50,22 @@ frechetDistC <- function(x, time, ...){
         warning("Large matrix or data.frame could cause memory problems.
       You should use imputeSenators function")
     }
-    if (!is.matrix(x))
-    {
-        x <- as.matrix(x)
+    if (!is.matrix(x)) {
+    tryCatch(
+        j <- as.matrix(x),
+        error = function(e){
+            stop( "x must be a matrix or a matrix coercionable object" ) } )
+    xx <- as.matrix(x)
+    if(dim(x)!=dim(xx)){
+        stop("x has been coerced into matrix but its dimensions are not correct")
     }
-    if (length(time) != dim(x)[2])
-    {
-        stop("Time vector must be the same length as x columns")
+    x <- xx
+    }
+    if (!is.vector(time) | !is.numeric(time) | length(time) != dim(x)[2]) {
+        stop("Time vector must be a numeric vector with same length as x columns")
     }
     Px <- Qx <- time
-    Df <- as.vector(as.matrix(t(x)))
+    Df <- as.vector(t(x))
     lenDf <- length(Df)
     resultado <- .C("myCalcMatrixEuclidCumul", Py = numeric(length(Px)),
                     Qy = numeric(length(Qx)),

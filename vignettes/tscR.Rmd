@@ -354,7 +354,7 @@ senators <- imputeSenators( bigDF, k = 100 )
 
 The created object (`senators`) is a list with 3 components.
 
-* $data: Data frama with original data
+* $data: Data frame with original data
 * $senatorData: Matrix with senators' trayectories
 * $senatorCluster: Vector with senators' clusters
 

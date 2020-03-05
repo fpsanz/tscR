@@ -38,22 +38,29 @@
 
 
 frechetDist <- function(x, time, ...) {
-  warning("This function is slower than frechetDistC.")
-  warning("You should use C version")
+  warning("This function is slower than frechetDistC.\nYou should use C version.")
   if(is(x, "SummarizedExperiment")){
         x <- importFromSE(x, ...)
     }
   if (dim(x)[1] > 1000) {
     warning(
-      "Large matrix or data.frame could cause memory
-        problems. You should use imputeSenators function"
+      "Large matrix or data.frame could cause memory problems.
+You should use imputeSenators function"
     )
   }
   if (!is.matrix(x)) {
-    x <- as.matrix(x)
+    tryCatch(
+        j <- as.matrix(x),
+        error = function(e){
+            stop( "x must be a matrix or a matrix coercionable object" ) } )
+    xx <- as.matrix(x)
+    if(dim(x)!=dim(xx)){
+        stop("x has been coerced into matrix but its dimensions are not correct")
+    }
+    x <- xx
   }
-  if (length(time) != dim(x)[2]) {
-    stop("Time vector must be the same length as x columns")
+  if (!is.vector(time) | !is.numeric(time) | length(time) != dim(x)[2]) {
+    stop("Time vector must be a numeric vector with same length as x columns")
   }
   dfrechet <- matrix(nrow = nrow(x), ncol = nrow(x))
   for (i in seq(1, nrow(x))) {
