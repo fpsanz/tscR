@@ -52,7 +52,7 @@ imputeSenators <- function(x, k = 100, ...) {
     }
     if (0.1 * nrow(x) < k) {
         k = 0.1 * nrow(x)
-        message(paste0("\nSetting k to ", k, ". 10% of total data"))
+        message(paste0("Setting k to ", k, ". 10% of total data"))
     }
     if (k > 100) {
         warning("K higher than 100 has severe computacional cost.

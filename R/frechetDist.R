@@ -50,11 +50,10 @@ You should use imputeSenators function"
   }
   if (!is.matrix(x)) {
     tryCatch(
-        j <- as.matrix(x),
+        { xx <- as.matrix(x) },
         error = function(e){
             stop( "x must be a matrix or a matrix coercionable object" ) } )
-    xx <- as.matrix(x)
-    if(dim(x)!=dim(xx)){
+    if(dim(x)[1]!=dim(xx)[1] | dim(x)[2]!=dim(xx)[2]){
         stop("x has been coerced into matrix but its dimensions are not correct")
     }
     x <- xx
