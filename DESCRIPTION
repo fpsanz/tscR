@@ -1,7 +1,7 @@
 Package: tscR
 Type: Package
 Title: A time series clustering package combining slope and Frechet distances
-Version: 1.1.1
+Version: 1.1.0
 Description: Clustering for time series data using slope distance and/or shape distance.
 Author: Miriam Riquelme-Pérez and Fernando Pérez-Sanz
 Maintainer: Pérez-Sanz, Fernando <fernando.perez8@um.es>
