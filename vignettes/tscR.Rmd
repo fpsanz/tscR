@@ -32,8 +32,7 @@ library(dplyr)
 library(grid)
 library(ggplot2)
 library(latex2exp)
-library(tscR)
-library(TSdist)
+library(dtw)
 ```
 
 # Overview
@@ -124,9 +123,9 @@ $$
 * DTW Distance
 
 ```{r echo=FALSE}
-dt1 <- DTWDistance(a,b)
-dt2 <- DTWDistance(a,c)
-dt3 <- DTWDistance(b,c)
+dt1 <- dtwDist(matrix(c(a,b), byrow = TRUE, nrow = 2))
+dt2 <- dtwDist(matrix(c(a,c), byrow = TRUE, nrow = 2))
+dt3 <- dtwDist(matrix(c(b,c), byrow = TRUE, nrow = 2))
 ```
 
 $$
@@ -301,7 +300,7 @@ As it can be appreciated in this last graph, the trajectories with descending - 
 
 ## Based on Fréchet distance
 
-This is a measure of similarity between curves that takes into account the location and order of the points along the curve (*TODO: meter alguna referencia*)
+This is a measure of similarity between curves that takes into account the location and order of the points along the curve.
 
 The procedure seems to be similar to the previous case:
 
